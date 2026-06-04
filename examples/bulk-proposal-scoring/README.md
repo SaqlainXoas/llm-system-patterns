@@ -39,6 +39,22 @@ This is the "do the real batch work first" version of the repo. It shows how to 
 
 That is why this example stays in-memory and focuses on engineering rhythm instead of introducing a vector DB too early.
 
+## End-to-end worker shape
+The code path to follow is:
+
+```text
+load proposals
+-> drop duplicates
+-> split into batches
+-> cache the brief embedding once
+-> score one batch at a time
+-> keep only the rolling top pool
+-> clean up finished batch rows
+-> judge the final shortlist
+```
+
+This is where the internal engineering lesson shows up most clearly: cache only what repeats, trim early, and release finished batch state as you move forward.
+
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)
 [![Cookbook](https://img.shields.io/badge/Cookbook-Examples-0f172a)](../README.md)

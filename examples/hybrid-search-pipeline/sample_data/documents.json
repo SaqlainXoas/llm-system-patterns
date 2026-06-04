@@ -1,0 +1,22 @@
+[
+  {
+    "doc_id": "doc-001",
+    "title": "Supplier activation platform",
+    "text": "Supplier activation workflow with SOC 2 readiness, JavaScript admin portal, and approval automation."
+  },
+  {
+    "doc_id": "doc-002",
+    "title": "Customer churn dashboard",
+    "text": "Retention risk dashboard for customer success leaders with weekly alerts and trend scoring."
+  },
+  {
+    "doc_id": "doc-003",
+    "title": "Vendor onboarding policy",
+    "text": "Vendor onboarding process with compliance review, SSO support, and approval checklist."
+  },
+  {
+    "doc_id": "doc-004",
+    "title": "Security control checklist",
+    "text": "Audit evidence tracking for SOC 2 controls, access review, and engineering exceptions."
+  }
+]

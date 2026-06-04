@@ -17,6 +17,27 @@ flowchart LR
 ## What this example is for
 The focus here is keyword signals, semantic retrieval, score merging, and failure-case analysis. It will be the concrete companion to the hybrid retrieval docs so readers can see how lexical and semantic signals cooperate in code.
 
+## File walkthrough order
+1. `matching.py`
+2. `llm.py`
+3. `sample_data/query.json`
+4. `sample_data/documents.json`
+
+## What the code teaches
+- how exact-term hits and semantic hits are built separately
+- how to merge the two result sets
+- why short tokens like `SOC 2` or `JS` should not be trusted to embeddings alone
+- where rerank helps if the right answer is already in the pool
+
+## Flow shape
+```text
+keyword hits
+-> semantic hits
+-> merge by id
+-> optional rerank
+-> return cleaner top-k
+```
+
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)
 [![Cookbook](https://img.shields.io/badge/Cookbook-Examples-0f172a)](../README.md)

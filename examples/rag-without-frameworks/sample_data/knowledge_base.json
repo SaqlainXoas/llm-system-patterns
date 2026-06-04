@@ -1,0 +1,27 @@
+[
+  {
+    "doc_id": "kb-001",
+    "title": "Onboarding policy",
+    "paragraphs": [
+      "The onboarding policy requires SSO for administrator access and weekly approval review for privileged roles.",
+      "Teams must keep evidence of access review decisions for SOC 2 audit readiness.",
+      "All exceptions must be documented in the control review log."
+    ]
+  },
+  {
+    "doc_id": "kb-002",
+    "title": "Support portal guide",
+    "paragraphs": [
+      "The support portal explains how to route vendor requests to the operations queue.",
+      "Dashboards can show weekly ticket volume by team."
+    ]
+  },
+  {
+    "doc_id": "kb-003",
+    "title": "Identity governance notes",
+    "paragraphs": [
+      "Identity governance work should connect approval flows with access review reporting.",
+      "Quarterly control review evidence should stay easy to retrieve."
+    ]
+  }
+]
