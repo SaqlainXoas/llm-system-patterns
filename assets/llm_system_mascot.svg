@@ -1,56 +1,130 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 96" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 96" width="140" height="134" role="img" aria-labelledby="title desc">
   <title id="title">Pipeline bot mascot</title>
-  <desc id="desc">A jumping robot mascot holding a filter funnel to represent the layered LLM system pipeline.</desc>
+  <desc id="desc">Animated jumping robot mascot for llm-system-patterns, holding a filter funnel that represents the layered pipeline.</desc>
+
+  <style>
+    :root {
+      --ink: #0f172a;
+      --teal: #0d9488;
+      --teal2: #5eead4;
+      --amber: #d97706;
+      --amber2: #fbbf24;
+      --violet: #7c3aed;
+    }
+
+    .bot {
+      animation: jump .52s ease-in-out infinite;
+      transform-origin: center bottom;
+    }
+
+    .shadow {
+      animation: shadow-scale .52s ease-in-out infinite;
+    }
+
+    .left-arm {
+      animation: wave-left .52s ease-in-out infinite;
+      transform-origin: right center;
+    }
+
+    .right-arm {
+      animation: wave-right .52s ease-in-out infinite;
+      transform-origin: left center;
+    }
+
+    .funnel {
+      animation: funnel-tilt .52s ease-in-out infinite;
+      transform-origin: center bottom;
+    }
+
+    .spark {
+      animation: spark .52s ease-in-out infinite;
+      transform-origin: center;
+      opacity: 0;
+    }
+
+    @keyframes jump {
+      0%, 100% { transform: translateY(0) scaleY(1) scaleX(1); }
+      28% { transform: translateY(-12px) scaleY(1.08) scaleX(0.96); }
+      50% { transform: translateY(-13px) scaleY(1.04) scaleX(0.99); }
+      82% { transform: translateY(-4px) scaleY(0.96) scaleX(1.05); }
+    }
+
+    @keyframes shadow-scale {
+      0%, 100% { transform: scaleX(1); opacity: 0.18; }
+      50% { transform: scaleX(0.42); opacity: 0.07; }
+    }
+
+    @keyframes wave-left {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-10deg); }
+    }
+
+    @keyframes wave-right {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    @keyframes funnel-tilt {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-3deg); }
+    }
+
+    @keyframes spark {
+      0% { transform: translateY(0); opacity: 0; }
+      40% { transform: translateY(-3px); opacity: 0.9; }
+      100% { transform: translateY(-10px); opacity: 0; }
+    }
+  </style>
 
   <defs>
     <linearGradient id="bodyGradient" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#5eead4"/>
-      <stop offset="100%" stop-color="#0d9488"/>
+      <stop offset="0" stop-color="var(--teal2)"/>
+      <stop offset="1" stop-color="var(--teal)"/>
     </linearGradient>
     <linearGradient id="funnelGradient" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#fbbf24"/>
-      <stop offset="100%" stop-color="#d97706"/>
+      <stop offset="0" stop-color="var(--amber2)"/>
+      <stop offset="1" stop-color="var(--amber)"/>
     </linearGradient>
     <linearGradient id="shineGradient" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
   </defs>
 
-  <ellipse cx="50" cy="86" rx="22" ry="4.5" fill="#0f172a" opacity="0.1"/>
+  <ellipse class="shadow" cx="50" cy="86" rx="22" ry="4.5" fill="#000"/>
 
-  <g opacity="0.9">
-    <rect x="49" y="5" width="2" height="6" rx="1" fill="#d97706"/>
-    <rect x="46" y="8" width="8" height="2" rx="1" fill="#d97706"/>
+  <g class="spark">
+    <rect x="49" y="5" width="2" height="6" rx="1" fill="var(--amber)"/>
+    <rect x="46" y="8" width="8" height="2" rx="1" fill="var(--amber)"/>
   </g>
 
-  <g>
-    <g>
-      <polygon points="34,14 66,14 58,26 42,26" fill="url(#funnelGradient)" stroke="#0f172a" stroke-width="2.2" stroke-linejoin="round"/>
-      <rect x="46" y="26" width="8" height="8" rx="2" fill="url(#funnelGradient)" stroke="#0f172a" stroke-width="2.2"/>
-      <line x1="40" y1="18" x2="60" y2="18" stroke="#0f172a" stroke-width="1.2" opacity="0.4"/>
-      <line x1="42" y1="21" x2="58" y2="21" stroke="#0f172a" stroke-width="1" opacity="0.3"/>
-      <circle cx="48" cy="30" r="1.5" fill="#0d9488"/>
-      <circle cx="50" cy="30" r="1.5" fill="#7c3aed"/>
-      <circle cx="52" cy="30" r="1.5" fill="#14b8a6"/>
+  <g class="bot">
+    <g class="funnel">
+      <polygon points="34,14 66,14 58,26 42,26" fill="url(#funnelGradient)" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/>
+      <rect x="46" y="26" width="8" height="8" rx="2" fill="url(#funnelGradient)" stroke="var(--ink)" stroke-width="2.2"/>
+      <line x1="40" y1="18" x2="60" y2="18" stroke="var(--ink)" stroke-width="1.2" opacity=".4"/>
+      <line x1="42" y1="21" x2="58" y2="21" stroke="var(--ink)" stroke-width="1" opacity=".3"/>
+      <circle cx="48" cy="30" r="1.5" fill="var(--teal)"/>
+      <circle cx="50" cy="30" r="1.5" fill="var(--violet)"/>
+      <circle cx="52" cy="30" r="1.5" fill="var(--teal2)"/>
     </g>
 
-    <rect x="14" y="34" width="72" height="34" rx="10" fill="url(#bodyGradient)" stroke="#0f172a" stroke-width="3"/>
+    <rect x="14" y="34" width="72" height="34" rx="10" fill="url(#bodyGradient)" stroke="var(--ink)" stroke-width="3"/>
     <rect x="18" y="38" width="64" height="26" rx="8" fill="url(#shineGradient)"/>
 
-    <rect x="24" y="40" width="52" height="18" rx="7" fill="#0b1220" opacity="0.92"/>
-    <rect x="30" y="44" width="8" height="10" rx="2" fill="#ffffff" opacity="0.92"/>
-    <rect x="62" y="44" width="8" height="10" rx="2" fill="#ffffff" opacity="0.92"/>
-    <rect x="40" y="50" width="20" height="4" rx="2" fill="#ffffff" opacity="0.3"/>
+    <rect x="24" y="40" width="52" height="18" rx="7" fill="#0b1220" opacity=".92"/>
+    <rect x="30" y="44" width="8" height="10" rx="2" fill="#fff" opacity=".92"/>
+    <rect x="62" y="44" width="8" height="10" rx="2" fill="#fff" opacity=".92"/>
+    <rect x="40" y="50" width="20" height="4" rx="2" fill="#fff" opacity=".3"/>
 
-    <circle cx="34" cy="62" r="3" fill="#d97706" opacity="0.95"/>
-    <circle cx="50" cy="62" r="3" fill="#5eead4" opacity="0.95"/>
-    <circle cx="66" cy="62" r="3" fill="#7c3aed" opacity="0.95"/>
+    <circle cx="34" cy="62" r="3" fill="var(--amber)" opacity=".95"/>
+    <circle cx="50" cy="62" r="3" fill="var(--teal2)" opacity=".95"/>
+    <circle cx="66" cy="62" r="3" fill="var(--violet)" opacity=".95"/>
 
-    <rect x="2" y="44" width="12" height="8" rx="3" fill="#0d9488"/>
-    <rect x="86" y="44" width="12" height="8" rx="3" fill="#0d9488"/>
+    <rect class="left-arm" x="2" y="44" width="12" height="8" rx="3" fill="var(--teal)"/>
+    <rect class="right-arm" x="86" y="44" width="12" height="8" rx="3" fill="var(--teal)"/>
 
-    <rect x="24" y="64" width="12" height="14" rx="4" fill="url(#bodyGradient)" stroke="#0f172a" stroke-width="3"/>
-    <rect x="64" y="64" width="12" height="14" rx="4" fill="url(#bodyGradient)" stroke="#0f172a" stroke-width="3"/>
+    <rect x="24" y="64" width="12" height="14" rx="4" fill="url(#bodyGradient)" stroke="var(--ink)" stroke-width="3"/>
+    <rect x="64" y="64" width="12" height="14" rx="4" fill="url(#bodyGradient)" stroke="var(--ink)" stroke-width="3"/>
   </g>
 </svg>
