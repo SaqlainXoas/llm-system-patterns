@@ -116,11 +116,11 @@ Together, they form a cleaner map from concepts to systems to orchestration.
 
 ## Current Status
 
-This first commit is a structured scaffold:
+The repo now has a strong first phase in place:
 
 - repo identity and scope are defined
-- the documentation map is in place
-- the first diagram is ready
-- pattern, guide, and example paths are prepared for the next writing phases
+- the hero visuals are in place
+- the first flagship pattern docs are now drafted
+- the first decision and example paths are now shaped around a real layered pipeline
 
-The next phase is to turn the flagship docs and examples into full working content.
+The next phase is to expand the remaining guides and start the first plain-Python example implementation.
