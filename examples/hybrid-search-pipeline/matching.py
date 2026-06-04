@@ -1,27 +1,11 @@
 import json
 
-from llm import embed_text_with_gemini
+from llm import semantic_score_with_gemini
 
 
 def load_json(path):
     with open(path, "r", encoding="utf-8") as handle:
         return json.load(handle)
-
-
-def cosine_similarity(left_vector, right_vector):
-    dot_product = 0.0
-    left_size = 0.0
-    right_size = 0.0
-
-    for left_value, right_value in zip(left_vector, right_vector):
-        dot_product += left_value * right_value
-        left_size += left_value * left_value
-        right_size += right_value * right_value
-
-    if left_size == 0 or right_size == 0:
-        return 0.0
-
-    return dot_product / ((left_size ** 0.5) * (right_size ** 0.5))
 
 
 def keyword_search(query, documents, top_k=3):
@@ -55,12 +39,15 @@ def keyword_search(query, documents, top_k=3):
 
 def semantic_search(query, documents, top_k=3):
     """Find broader meaning matches with embeddings."""
-    query_vector = embed_text_with_gemini(query["text"])
+    embedding_cache = {}
     scored_rows = []
 
     for document in documents:
-        doc_vector = embed_text_with_gemini(document["text"])
-        semantic_score = cosine_similarity(query_vector, doc_vector)
+        semantic_score = semantic_score_with_gemini(
+            query["text"],
+            document["text"],
+            embedding_cache,
+        )
         scored_rows.append(
             {
                 "document": document,

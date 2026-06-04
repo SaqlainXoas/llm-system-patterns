@@ -13,6 +13,31 @@ def embed_text_with_gemini(text):
     return result.embeddings[0].values
 
 
+def _cosine_similarity(left_vector, right_vector):
+    dot_product = 0.0
+    left_size = 0.0
+    right_size = 0.0
+
+    for left_value, right_value in zip(left_vector, right_vector):
+        dot_product += left_value * right_value
+        left_size += left_value * left_value
+        right_size += right_value * right_value
+
+    if left_size == 0 or right_size == 0:
+        return 0.0
+
+    return dot_product / ((left_size ** 0.5) * (right_size ** 0.5))
+
+
+def semantic_score_with_gemini(brief_vector, proposal_text, embedding_cache):
+    """Use Gemini embeddings first, then return one semantic score."""
+    if proposal_text not in embedding_cache:
+        embedding_cache[proposal_text] = embed_text_with_gemini(proposal_text)
+
+    proposal_vector = embedding_cache[proposal_text]
+    return _cosine_similarity(brief_vector, proposal_vector)
+
+
 def judge_final_pool(brief, shortlist_rows):
     """Late-stage LLM validation for the final shortlist only."""
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])

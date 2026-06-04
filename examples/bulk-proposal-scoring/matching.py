@@ -1,20 +1,4 @@
-from llm import embed_text_with_gemini
-
-
-def cosine_similarity(left_vector, right_vector):
-    dot_product = 0.0
-    left_size = 0.0
-    right_size = 0.0
-
-    for left_value, right_value in zip(left_vector, right_vector):
-        dot_product += left_value * right_value
-        left_size += left_value * left_value
-        right_size += right_value * right_value
-
-    if left_size == 0 or right_size == 0:
-        return 0.0
-
-    return dot_product / ((left_size ** 0.5) * (right_size ** 0.5))
+from llm import embed_text_with_gemini, semantic_score_with_gemini
 
 
 def get_cached_embedding(cache, text):
@@ -25,13 +9,16 @@ def get_cached_embedding(cache, text):
     return cache[text]
 
 
-def score_one_batch(brief, proposals, brief_vector):
+def score_one_batch(brief, proposals, brief_vector, embedding_cache):
     """Score only the current batch, then return ranked rows."""
     scored_rows = []
 
     for proposal in proposals:
-        proposal_vector = embed_text_with_gemini(proposal["text"])
-        semantic_score = cosine_similarity(brief_vector, proposal_vector)
+        semantic_score = semantic_score_with_gemini(
+            brief_vector,
+            proposal["text"],
+            embedding_cache,
+        )
 
         score = semantic_score
         for term in brief["preferred_terms"]:
@@ -73,7 +60,7 @@ def build_batch_shortlist(brief, proposal_batches, rolling_pool_size=40, top_k=1
     shortlist = []
 
     for batch in proposal_batches:
-        batch_rows = score_one_batch(brief, batch, brief_vector)
+        batch_rows = score_one_batch(brief, batch, brief_vector, embedding_cache)
         shortlist.extend(cleanup_finished_batch(batch_rows))
         shortlist.sort(key=lambda row: row["score"], reverse=True)
         shortlist = shortlist[:rolling_pool_size]
