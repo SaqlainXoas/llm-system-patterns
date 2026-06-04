@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 96" role="img" aria-labelledby="title desc">
+  <title id="title">Pipeline bot mascot</title>
+  <desc id="desc">A jumping robot mascot holding a filter funnel to represent the layered LLM system pipeline.</desc>
+
+  <defs>
+    <linearGradient id="bodyGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5eead4"/>
+      <stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="funnelGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="shineGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="50" cy="86" rx="22" ry="4.5" fill="#0f172a" opacity="0.1"/>
+
+  <g opacity="0.9">
+    <rect x="49" y="5" width="2" height="6" rx="1" fill="#d97706"/>
+    <rect x="46" y="8" width="8" height="2" rx="1" fill="#d97706"/>
+  </g>
+
+  <g>
+    <g>
+      <polygon points="34,14 66,14 58,26 42,26" fill="url(#funnelGradient)" stroke="#0f172a" stroke-width="2.2" stroke-linejoin="round"/>
+      <rect x="46" y="26" width="8" height="8" rx="2" fill="url(#funnelGradient)" stroke="#0f172a" stroke-width="2.2"/>
+      <line x1="40" y1="18" x2="60" y2="18" stroke="#0f172a" stroke-width="1.2" opacity="0.4"/>
+      <line x1="42" y1="21" x2="58" y2="21" stroke="#0f172a" stroke-width="1" opacity="0.3"/>
+      <circle cx="48" cy="30" r="1.5" fill="#0d9488"/>
+      <circle cx="50" cy="30" r="1.5" fill="#7c3aed"/>
+      <circle cx="52" cy="30" r="1.5" fill="#14b8a6"/>
+    </g>
+
+    <rect x="14" y="34" width="72" height="34" rx="10" fill="url(#bodyGradient)" stroke="#0f172a" stroke-width="3"/>
+    <rect x="18" y="38" width="64" height="26" rx="8" fill="url(#shineGradient)"/>
+
+    <rect x="24" y="40" width="52" height="18" rx="7" fill="#0b1220" opacity="0.92"/>
+    <rect x="30" y="44" width="8" height="10" rx="2" fill="#ffffff" opacity="0.92"/>
+    <rect x="62" y="44" width="8" height="10" rx="2" fill="#ffffff" opacity="0.92"/>
+    <rect x="40" y="50" width="20" height="4" rx="2" fill="#ffffff" opacity="0.3"/>
+
+    <circle cx="34" cy="62" r="3" fill="#d97706" opacity="0.95"/>
+    <circle cx="50" cy="62" r="3" fill="#5eead4" opacity="0.95"/>
+    <circle cx="66" cy="62" r="3" fill="#7c3aed" opacity="0.95"/>
+
+    <rect x="2" y="44" width="12" height="8" rx="3" fill="#0d9488"/>
+    <rect x="86" y="44" width="12" height="8" rx="3" fill="#0d9488"/>
+
+    <rect x="24" y="64" width="12" height="14" rx="4" fill="url(#bodyGradient)" stroke="#0f172a" stroke-width="3"/>
+    <rect x="64" y="64" width="12" height="14" rx="4" fill="url(#bodyGradient)" stroke="#0f172a" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,11 +1,13 @@
 # LLM System Patterns
 
 <p align="center">
-  <img src="assets/svg/system-pipeline-hero.svg" alt="LLM system pipeline diagram showing deterministic filters, retrieval, reranking, and final LLM judgment" width="980">
+  <img src="assets/llm_system_mascot.svg" alt="Pipeline bot mascot holding a filter funnel" width="170">
 </p>
 
+> Practical patterns for building reliable LLM systems with retrieval, ranking, scoring, guardrails, and production-minded engineering tradeoffs.
+
 <p align="center">
-  Practical patterns for building reliable LLM systems with retrieval, ranking, scoring, guardrails, and production-minded engineering tradeoffs.
+  <img src="assets/svg/system-pipeline-hero.svg" alt="LLM system pipeline diagram showing deterministic filters, retrieval, reranking, and final LLM judgment" width="980">
 </p>
 
 ## Why This Repo Exists
