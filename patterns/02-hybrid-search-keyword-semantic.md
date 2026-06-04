@@ -41,6 +41,39 @@ Keyword-only pipelines fail in the other direction when users change phrasing an
 
 Hybrid starts becoming the right default when exact requirements exist alongside natural-language variation, false positives from semantic-only retrieval are costly, and false negatives from keyword-only retrieval are also costly. That is why enterprise search, document matching, support knowledge retrieval, and policy search often end up here.
 
+## Implementation blueprint
+A rough hybrid retrieval flow in plain Python looks like this:
+
+```python
+def keyword_retrieve(query, docs, top_k=20):
+    # This can be BM25, exact matching, or metadata boosting.
+    return rank_by_keyword_signal(query, docs)[:top_k]
+
+def semantic_retrieve(query_text, docs, embed_fn, top_k=20):
+    query_vec = embed_fn(query_text)
+    scored = []
+    for doc in docs:
+        doc_vec = embed_fn(doc["text"])
+        score = cosine_similarity(query_vec, doc_vec)
+        scored.append((doc, score))
+    ranked = sorted(scored, key=lambda x: x[1], reverse=True)
+    return [doc for doc, _ in ranked[:top_k]]
+
+def hybrid_retrieve(query, docs):
+    lexical = keyword_retrieve(query["text"], docs, top_k=20)
+    semantic = semantic_retrieve(query["text"], docs, embed_fn=embed, top_k=20)
+    return dedupe_by_id(lexical + semantic)
+```
+
+That is intentionally simple. The first useful version is often just two candidate lists and a merge, not a complicated score-fusion system.
+
+## Practical options
+`keyword pre-filter -> semantic retrieval` is a strong fit when abbreviations, required skills, or exact document tags must be preserved before semantic recall expands the pool.
+
+`keyword top-k + embedding top-k -> merge` is a strong fit when you want both exact lexical support and broader paraphrase recovery.
+
+`hybrid -> rerank` is a strong fit when you already have good recall but the final ordering still feels noisy.
+
 ## Practical default
 For many production-minded systems, start here:
 

@@ -19,6 +19,26 @@ That is why dictionaries, exact matching, metadata checks, or keyword support st
 
 This shows up a lot in document retrieval and resume-to-JD matching. Semantic similarity may correctly understand that two documents are about related work, but it may still underweight a critical abbreviation, certification code, tool name, or short skill token that should have been treated as decisive.
 
+## How to repair it
+The usual repair pattern is simple:
+
+```text
+exact abbreviation check
+-> keyword or metadata boost
+-> semantic retrieval
+-> merge candidate sets
+```
+
+That means if a skill code like `RN`, `C++`, `CPA`, or a compliance label like `SOC 2` is mandatory, you do not leave that truth entirely to embeddings.
+
+```python
+def abbreviation_guard(query, doc):
+    required_terms = query.get("required_terms", [])
+    return all(term.lower() in doc["text"].lower() for term in required_terms)
+```
+
+You can use that as a hard filter, a boosting signal, or a fallback path when semantic retrieval feels too loose.
+
 ## Where to use it
 This pattern matters in compliance, skills matching, technical search, regulated domains, and any workflow where codes, versions, acronyms, document abbreviations, or required skill names must not be missed.
 

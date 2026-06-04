@@ -22,6 +22,28 @@ Use a reranker when top-k quality matters more than broad recall, semantically s
 
 Skip it when the candidate set is already tiny, the retrieval ranking is already strong enough, or the latency budget is too tight to justify the extra stage. A reranker is not a repair tool for missing recall; if the right item never appears in the retrieved set, fix retrieval first.
 
+## How to use it
+The reranker usually receives the raw query plus a shortlist of candidate texts. It outputs a better score for each query-document pair than broad retrieval gave you.
+
+```python
+def rerank_candidates(query_text, candidates, reranker_fn, keep_top_k=10):
+    pairs = [{"query": query_text, "text": c["text"]} for c in candidates]
+    scores = reranker_fn(pairs)
+    ranked = sorted(zip(candidates, scores), key=lambda x: x[1], reverse=True)
+    return [candidate for candidate, _ in ranked[:keep_top_k]]
+```
+
+In practice, `reranker_fn` might call a hosted rerank API or a local cross-encoder model. The key architectural rule is the same either way: only rerank an already narrowed shortlist.
+
+## A healthy placement
+Do not call the reranker over the full corpus. The healthier placement is:
+
+```text
+filter -> retrieve top 30-50 -> rerank -> keep top 5-10 -> final action
+```
+
+That final action might be showing results, selecting RAG chunks, or sending the cleanest candidates into an LLM judge.
+
 ## Practical default
 The healthiest placement is usually:
 

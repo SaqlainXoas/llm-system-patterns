@@ -17,8 +17,35 @@ People often treat a good explanation as proof of a good judgment. It is not. A 
 
 The safest use of an LLM judge is comparative work on a small shortlist with explicit criteria and evidence-based outputs. Deterministic logic should still own binary rules, thresholds, and hard constraints.
 
-## Where this goes next
-This page will grow into prompt structure, evidence-citation patterns, judge calibration, and ways to separate scoring from explanation.
+## A better judge prompt shape
+The reliable version is usually:
+
+```text
+- provide only the shortlist
+- provide explicit criteria
+- require evidence-backed scoring
+- separate score from explanation
+- forbid guessing missing facts
+```
+
+```python
+prompt = f"""
+Score each candidate against these criteria: {criteria}
+Use only the provided evidence.
+Return:
+- score
+- evidence snippets
+- short explanation
+
+Candidates:
+{shortlist}
+"""
+```
+
+This is much safer than asking the model to "pick the best one" from a broad, messy pool with no scoring rubric.
+
+## Practical rule
+If the judge prompt does not contain explicit criteria and visible evidence, the system is usually asking the model to improvise too much. Reliability improves when the shortlist is small, the rubric is clear, and the output shape is constrained.
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)

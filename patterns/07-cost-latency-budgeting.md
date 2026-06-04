@@ -36,7 +36,29 @@ hard filters -> retrieval -> rerank -> LLM only on the final shortlist
 
 That shape reduces model calls, prompt size, and wasted candidate processing while making stage-by-stage debugging much easier.
 
-## Practical default
+## A rough budgeting blueprint
+Even simple counters can make the system much easier to tune:
+
+```python
+budget = {
+    "max_retrieval_k": 50,
+    "max_rerank_k": 20,
+    "max_judge_k": 5,
+    "max_prompt_chars": 12000,
+}
+
+def trim_pipeline(candidates):
+    retrieved = candidates[:budget["max_retrieval_k"]]
+    reranked = rerank(retrieved)[:budget["max_rerank_k"]]
+    judged = reranked[:budget["max_judge_k"]]
+    return judged
+```
+
+You do not need perfect telemetry on day one, but you do need hard caps somewhere. Otherwise every later stage quietly becomes more expensive than intended.
+
+## Practical defaults
+Good early defaults are: cap retrieval size, rerank only the shortlist, cache embeddings or repeated retrieval work, and keep a strict limit on how much text reaches the final LLM call.
+
 If you do not know where to start, use this instinct:
 
 ```text

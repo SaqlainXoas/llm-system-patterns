@@ -39,6 +39,42 @@ The weak version is: give everything to the LLM and ask it to choose. The strong
 
 That structure lowers cost, lowers latency, enforces hard rules deterministically, and makes debugging easier because you can inspect which stage failed.
 
+## Implementation blueprint
+For a resume-to-JD matcher or document scorer, think in four small functions:
+
+```python
+def pre_filter(items, query):
+    return [
+        item for item in items
+        if item["country"] == query["country"]
+        and query["must_have_skill"] in item["text"]
+    ]
+
+def retrieve(items, query_embedding, embed_fn, top_k=50):
+    scored = []
+    for item in items:
+        score = cosine_similarity(query_embedding, embed_fn(item["text"]))
+        scored.append((item, score))
+    return [item for item, _ in sorted(scored, key=lambda x: x[1], reverse=True)[:top_k]]
+
+def rerank(query_text, candidates, reranker_fn, top_k=10):
+    scored = reranker_fn(query_text, [c["text"] for c in candidates])
+    ranked = sorted(zip(candidates, scored), key=lambda x: x[1], reverse=True)
+    return [item for item, _ in ranked[:top_k]]
+
+def judge(shortlist, criteria, llm_fn):
+    return llm_fn(shortlist=shortlist, criteria=criteria)
+```
+
+The point is not the exact library. The point is the sequence: hard checks first, semantic narrowing second, precision cleanup third, expensive reasoning last.
+
+## What the stages usually look like
+`metadata / regex filters` usually means country checks, exact skill names, explicit compliance tags, document type checks, or numeric thresholds that should not be left to the LLM.
+
+`hybrid retrieval` usually means keyword top-k plus embedding top-k merged into one candidate set. This is especially useful when the system must respect abbreviations like `RN`, `SOC 2`, or `C++` but still recover paraphrases and related meaning.
+
+`top-k narrowing` means setting a hard cap before the next expensive stage. For example, retrieve top 50, rerank top 20, then let the LLM judge only top 5. Those numbers are not magic. They are there to keep cost and noise bounded.
+
 ## Practical default
 If you want a healthy default shape, start here:
 
