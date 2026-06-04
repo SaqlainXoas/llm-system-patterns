@@ -31,10 +31,12 @@ If you are using a framework, a text splitter such as LangChain's recursive char
 def chunk_text(text, chunk_size=800, overlap=120):
     chunks = []
     start = 0
+
     while start < len(text):
         end = start + chunk_size
         chunks.append(text[start:end])
         start = end - overlap
+
     return chunks
 ```
 
@@ -45,6 +47,7 @@ def chunk_by_sections(section_blocks, max_chars=1200):
     chunks = []
     current = []
     current_len = 0
+
     for block in section_blocks:
         if current_len + len(block) > max_chars and current:
             chunks.append("\n".join(current))
@@ -53,8 +56,10 @@ def chunk_by_sections(section_blocks, max_chars=1200):
         else:
             current.append(block)
             current_len += len(block)
+
     if current:
         chunks.append("\n".join(current))
+
     return chunks
 ```
 

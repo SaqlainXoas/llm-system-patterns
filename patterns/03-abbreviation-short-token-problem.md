@@ -32,12 +32,17 @@ exact abbreviation check
 That means if a skill code like `RN`, `C++`, `CPA`, or a compliance label like `SOC 2` is mandatory, you do not leave that truth entirely to embeddings.
 
 ```python
-def abbreviation_guard(query, doc):
-    required_terms = query.get("required_terms", [])
-    return all(term.lower() in doc["text"].lower() for term in required_terms)
+required_terms = query.get("required_terms", [])
+doc_text = doc["text"].lower()
+
+passed_all_terms = True
+for term in required_terms:
+    if term.lower() not in doc_text:
+        passed_all_terms = False
+        break
 ```
 
-You can use that as a hard filter, a boosting signal, or a fallback path when semantic retrieval feels too loose.
+You can use `passed_all_terms` as a hard filter, a boosting signal, or a fallback path when semantic retrieval feels too loose.
 
 ## Where to use it
 This pattern matters in compliance, skills matching, technical search, regulated domains, and any workflow where codes, versions, acronyms, document abbreviations, or required skill names must not be missed.

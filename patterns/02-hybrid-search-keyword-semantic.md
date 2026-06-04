@@ -42,30 +42,29 @@ Keyword-only pipelines fail in the other direction when users change phrasing an
 Hybrid starts becoming the right default when exact requirements exist alongside natural-language variation, false positives from semantic-only retrieval are costly, and false negatives from keyword-only retrieval are also costly. That is why enterprise search, document matching, support knowledge retrieval, and policy search often end up here.
 
 ## Implementation blueprint
-A rough hybrid retrieval flow in plain Python looks like this:
+A rough hybrid retrieval flow is easier to learn when it is written as one simple pipeline:
 
 ```python
-def keyword_retrieve(query, docs, top_k=20):
-    # This can be BM25, exact matching, or metadata boosting.
-    return rank_by_keyword_signal(query, docs)[:top_k]
+# Step 1: keyword search for exact terms, abbreviations, and hard matches.
+keyword_hits = keyword_search(query["text"], docs, top_k=20)
 
-def semantic_retrieve(query_text, docs, embed_fn, top_k=20):
-    query_vec = embed_fn(query_text)
-    scored = []
-    for doc in docs:
-        doc_vec = embed_fn(doc["text"])
-        score = cosine_similarity(query_vec, doc_vec)
-        scored.append((doc, score))
-    ranked = sorted(scored, key=lambda x: x[1], reverse=True)
-    return [doc for doc, _ in ranked[:top_k]]
+# Step 2: semantic search for similar meaning.
+query_vector = embed(query["text"])
+semantic_rows = []
 
-def hybrid_retrieve(query, docs):
-    lexical = keyword_retrieve(query["text"], docs, top_k=20)
-    semantic = semantic_retrieve(query["text"], docs, embed_fn=embed, top_k=20)
-    return dedupe_by_id(lexical + semantic)
+for doc in docs:
+    doc_vector = embed(doc["text"])
+    score = cosine_similarity(query_vector, doc_vector)
+    semantic_rows.append({"doc": doc, "score": score})
+
+semantic_rows.sort(key=lambda row: row["score"], reverse=True)
+semantic_hits = [row["doc"] for row in semantic_rows[:20]]
+
+# Step 3: merge both candidate sets and remove duplicates.
+merged_hits = dedupe_by_id(keyword_hits + semantic_hits)
 ```
 
-That is intentionally simple. The first useful version is often just two candidate lists and a merge, not a complicated score-fusion system.
+That is intentionally simple. The first useful version is often just `keyword hits + semantic hits + merge`, not a complicated score-fusion system.
 
 ## Practical options
 `keyword pre-filter -> semantic retrieval` is a strong fit when abbreviations, required skills, or exact document tags must be preserved before semantic recall expands the pool.

@@ -26,14 +26,24 @@ Skip it when the candidate set is already tiny, the retrieval ranking is already
 The reranker usually receives the raw query plus a shortlist of candidate texts. It outputs a better score for each query-document pair than broad retrieval gave you.
 
 ```python
-def rerank_candidates(query_text, candidates, reranker_fn, keep_top_k=10):
-    pairs = [{"query": query_text, "text": c["text"]} for c in candidates]
-    scores = reranker_fn(pairs)
-    ranked = sorted(zip(candidates, scores), key=lambda x: x[1], reverse=True)
-    return [candidate for candidate, _ in ranked[:keep_top_k]]
+# Step 1: prepare query-document pairs.
+pairs = []
+for candidate in candidates:
+    pairs.append({
+        "query": query_text,
+        "text": candidate["text"],
+    })
+
+# Step 2: get reranker scores.
+scores = call_reranker(pairs)
+
+# Step 3: sort by reranker score and keep only the top few.
+ranked_rows = list(zip(candidates, scores))
+ranked_rows.sort(key=lambda row: row[1], reverse=True)
+top_10 = [candidate for candidate, _ in ranked_rows[:10]]
 ```
 
-In practice, `reranker_fn` might call a hosted rerank API or a local cross-encoder model. The key architectural rule is the same either way: only rerank an already narrowed shortlist.
+In practice, `call_reranker` might call a hosted rerank API or a local cross-encoder model. The key architectural rule is the same either way: only rerank an already narrowed shortlist.
 
 ## A healthy placement
 Do not call the reranker over the full corpus. The healthier placement is:

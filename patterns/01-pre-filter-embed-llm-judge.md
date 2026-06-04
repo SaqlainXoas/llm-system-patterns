@@ -40,33 +40,44 @@ The weak version is: give everything to the LLM and ask it to choose. The strong
 That structure lowers cost, lowers latency, enforces hard rules deterministically, and makes debugging easier because you can inspect which stage failed.
 
 ## Implementation blueprint
-For a resume-to-JD matcher or document scorer, think in four small functions:
+For a resume-to-JD matcher or document scorer, a beginner-friendly first version is easier to understand when it runs top to bottom:
 
 ```python
-def pre_filter(items, query):
-    return [
-        item for item in items
-        if item["country"] == query["country"]
-        and query["must_have_skill"] in item["text"]
-    ]
+# Step 1: keep only items that pass hard rules.
+filtered_items = []
+for item in items:
+    same_country = item["country"] == query["country"]
+    has_required_skill = query["must_have_skill"].lower() in item["text"].lower()
 
-def retrieve(items, query_embedding, embed_fn, top_k=50):
-    scored = []
-    for item in items:
-        score = cosine_similarity(query_embedding, embed_fn(item["text"]))
-        scored.append((item, score))
-    return [item for item, _ in sorted(scored, key=lambda x: x[1], reverse=True)[:top_k]]
+    if same_country and has_required_skill:
+        filtered_items.append(item)
 
-def rerank(query_text, candidates, reranker_fn, top_k=10):
-    scored = reranker_fn(query_text, [c["text"] for c in candidates])
-    ranked = sorted(zip(candidates, scored), key=lambda x: x[1], reverse=True)
-    return [item for item, _ in ranked[:top_k]]
+# Step 2: score the remaining items with embeddings.
+query_vector = embed(query["text"])
+semantic_scores = []
 
-def judge(shortlist, criteria, llm_fn):
-    return llm_fn(shortlist=shortlist, criteria=criteria)
+for item in filtered_items:
+    item_vector = embed(item["text"])
+    score = cosine_similarity(query_vector, item_vector)
+    semantic_scores.append({"item": item, "score": score})
+
+semantic_scores.sort(key=lambda row: row["score"], reverse=True)
+top_50 = [row["item"] for row in semantic_scores[:50]]
+
+# Step 3: rerank only the shortlist, not the full dataset.
+rerank_scores = call_reranker(query["text"], [item["text"] for item in top_50])
+reranked_rows = list(zip(top_50, rerank_scores))
+reranked_rows.sort(key=lambda row: row[1], reverse=True)
+top_10 = [item for item, _ in reranked_rows[:10]]
+
+# Step 4: ask the LLM to judge only the final shortlist.
+final_result = call_llm_judge(
+    shortlist=top_10,
+    criteria=query["criteria"],
+)
 ```
 
-The point is not the exact library. The point is the sequence: hard checks first, semantic narrowing second, precision cleanup third, expensive reasoning last.
+Functions such as `embed`, `call_reranker`, and `call_llm_judge` are placeholders. The important part is the shape: hard checks first, semantic narrowing second, precision cleanup third, expensive reasoning last.
 
 ## What the stages usually look like
 `metadata / regex filters` usually means country checks, exact skill names, explicit compliance tags, document type checks, or numeric thresholds that should not be left to the LLM.
