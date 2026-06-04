@@ -1,0 +1,358 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 260" width="100%" role="img" aria-label="LLM system pipeline hero diagram — animated" preserveAspectRatio="xMidYMid meet">
+  <title>LLM system pipeline</title>
+  <desc>Animated five-stage LLM pipeline: pre-filter, hybrid search, reranker, LLM judge, and ranked output.</desc>
+
+  <defs>
+    <style><![CDATA[
+      :root {
+        --ink: #0f172a;
+        --muted: #64748b;
+        --soft: #e2e8f0;
+        --panel: #ffffff;
+        --teal: #0d9488;
+        --teal2: #5eead4;
+        --amber: #d97706;
+        --amber2: #f59e0b;
+        --violet: #7c3aed;
+        --violet2: #a78bfa;
+        --violet3: #c4b5fd;
+      }
+
+      text {
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      }
+
+      .card {
+        fill: #ffffff;
+        stroke: #0f172a;
+        stroke-width: 2.2;
+        filter: url(#cardShadow);
+      }
+
+      .label {
+        fill: #64748b;
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .main {
+        fill: #0f172a;
+        font-size: 13px;
+        font-weight: 560;
+        letter-spacing: .1px;
+      }
+
+      .chip {
+        fill: #e2e8f0;
+        stroke: #0f172a;
+        stroke-width: 1.5;
+      }
+
+      .sub {
+        fill: #64748b;
+        font-size: 11px;
+        font-weight: 520;
+      }
+
+      .wire-base {
+        fill: none;
+        stroke: #94a3b8;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-dasharray: 5 9;
+        opacity: .42;
+      }
+
+      .wire-glow {
+        fill: none;
+        stroke-width: 10;
+        stroke-linecap: round;
+        stroke-dasharray: 24 76;
+        stroke-dashoffset: 100;
+        opacity: 0;
+        filter: url(#flowBlur);
+        animation: packetGlow 3.8s linear infinite;
+      }
+
+      .wire-packet {
+        fill: none;
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-dasharray: 16 84;
+        stroke-dashoffset: 100;
+        opacity: 0;
+        animation: packet 3.8s linear infinite;
+      }
+
+      .packet-1 { animation-delay: 0s; }
+      .packet-2 { animation-delay: .42s; }
+      .packet-3 { animation-delay: .84s; }
+      .packet-4 { animation-delay: 1.26s; }
+      .packet-5 { animation-delay: 1.68s; }
+
+      .stage-glow {
+        fill: transparent;
+        stroke-width: 3.2;
+        opacity: 0;
+        filter: url(#flowBlur);
+        animation: stageGlow 3.8s ease-in-out infinite;
+      }
+
+      .stage-1 { animation-delay: .18s; }
+      .stage-2 { animation-delay: .60s; }
+      .stage-3 { animation-delay: 1.02s; }
+      .stage-4 { animation-delay: 1.44s; }
+      .stage-5 { animation-delay: 1.86s; }
+      .stage-6 { animation-delay: 2.28s; }
+
+      .spark {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: sparkPulse 1.8s ease-in-out infinite;
+      }
+
+      .bot {
+        animation: judgeBotBounce 1.4s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: center bottom;
+      }
+
+      .bot-eye {
+        animation: botBlink 4.2s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      .bot-arm-left {
+        animation: armLeft 1.4s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: right center;
+      }
+
+      .bot-arm-right {
+        animation: armRight 1.4s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: left center;
+      }
+
+      .score-pill {
+        animation: scorePulse 1.8s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      .rank-bar-1 { animation: rankShift 2.2s ease-in-out infinite; }
+      .rank-bar-2 { animation: rankShift 2.2s ease-in-out infinite .12s; }
+      .rank-bar-3 { animation: rankShift 2.2s ease-in-out infinite .24s; }
+
+      @keyframes packet {
+        0%   { stroke-dashoffset: 100; opacity: 0; }
+        6%   { opacity: 1; }
+        26%  { stroke-dashoffset: 0; opacity: 1; }
+        33%  { opacity: 0; }
+        100% { stroke-dashoffset: 0; opacity: 0; }
+      }
+
+      @keyframes packetGlow {
+        0%   { stroke-dashoffset: 100; opacity: 0; }
+        6%   { opacity: .65; }
+        26%  { stroke-dashoffset: 0; opacity: .65; }
+        34%  { opacity: 0; }
+        100% { stroke-dashoffset: 0; opacity: 0; }
+      }
+
+      @keyframes stageGlow {
+        0%, 7%, 100% { opacity: 0; }
+        12%, 24%     { opacity: .95; }
+        31%          { opacity: 0; }
+      }
+
+      @keyframes sparkPulse {
+        0%, 100% { opacity: .28; transform: scale(.92) translateY(0); }
+        45%      { opacity: 1; transform: scale(1.18) translateY(-1px); }
+      }
+
+      @keyframes judgeBotBounce {
+        0%, 100% { transform: translateY(0) scaleY(1) scaleX(1); }
+        35%      { transform: translateY(-3px) scaleY(1.03) scaleX(.98); }
+        60%      { transform: translateY(-1px) scaleY(.98) scaleX(1.02); }
+      }
+
+      @keyframes botBlink {
+        0%, 94%, 100% { transform: scaleY(1); }
+        96%, 98%      { transform: scaleY(.15); }
+      }
+
+      @keyframes armLeft {
+        0%, 100% { transform: rotate(0deg); }
+        50%      { transform: rotate(-8deg); }
+      }
+
+      @keyframes armRight {
+        0%, 100% { transform: rotate(0deg); }
+        50%      { transform: rotate(8deg); }
+      }
+
+      @keyframes scorePulse {
+        0%, 100% { opacity: .82; transform: scale(1); }
+        50%      { opacity: 1; transform: scale(1.06); }
+      }
+
+      @keyframes rankShift {
+        0%, 100% { opacity: .38; transform: translateX(0); }
+        45%      { opacity: .95; transform: translateX(4px); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .wire-glow, .wire-packet, .stage-glow, .spark, .bot, .bot-eye, .bot-arm-left, .bot-arm-right, .score-pill, .rank-bar-1, .rank-bar-2, .rank-bar-3 {
+          animation: none !important;
+        }
+        .wire-packet, .wire-glow { opacity: .8; stroke-dashoffset: 0; }
+        .stage-glow { opacity: .16; }
+      }
+    ]]></style>
+
+    <linearGradient id="gT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="gV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c4b5fd"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="gScore" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-14%" width="120%" height="132%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.2" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <filter id="flowBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>
+  </defs>
+
+  <g>
+    <rect class="card" x="40" y="112" width="118" height="56" rx="12"/>
+    <rect class="stage-glow stage-1" x="40" y="112" width="118" height="56" rx="12" stroke="#d97706"/>
+    <text class="label" x="52" y="132">input</text>
+    <text class="main" x="52" y="153">documents</text>
+    <rect class="chip" x="128" y="124" width="22" height="22" rx="7"/>
+    <text class="main" x="139" y="139" text-anchor="middle">N</text>
+  </g>
+
+  <path class="wire-base" d="M158 140 H180"/>
+  <path class="wire-glow packet-1" pathLength="100" d="M158 140 H180" stroke="#f59e0b"/>
+  <path class="wire-packet packet-1" pathLength="100" d="M158 140 H180" stroke="#d97706"/>
+
+  <g>
+    <rect class="card" x="180" y="100" width="120" height="80" rx="13"/>
+    <rect class="stage-glow stage-2" x="180" y="100" width="120" height="80" rx="13" stroke="#f59e0b"/>
+    <text class="label" x="194" y="120">stage 1</text>
+    <rect class="chip" x="194" y="128" width="92" height="22" rx="7"/>
+    <text class="main" x="240" y="143" text-anchor="middle">pre-filter</text>
+    <polygon points="228,111 272,111 264,120 236,120" fill="url(#gA)" stroke="#0f172a" stroke-width="1.5" stroke-linejoin="round"/>
+    <rect x="247" y="120" width="6" height="6" rx="1.5" fill="url(#gA)" stroke="#0f172a" stroke-width="1.5"/>
+  </g>
+
+  <path class="wire-base" d="M300 140 H330"/>
+  <path class="wire-glow packet-2" pathLength="100" d="M300 140 H330" stroke="#f59e0b"/>
+  <path class="wire-packet packet-2" pathLength="100" d="M300 140 H330" stroke="#d97706"/>
+
+  <g>
+    <rect class="card" x="330" y="100" width="130" height="80" rx="13"/>
+    <rect class="stage-glow stage-3" x="330" y="100" width="130" height="80" rx="13" stroke="#14b8a6"/>
+    <text class="label" x="344" y="120">stage 2</text>
+    <rect class="chip" x="344" y="128" width="102" height="22" rx="7"/>
+    <text class="main" x="395" y="143" text-anchor="middle">hybrid search</text>
+    <line x1="412" y1="111" x2="437" y2="111" stroke="#0d9488" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+    <line x1="412" y1="116" x2="431" y2="116" stroke="#0d9488" stroke-width="1.6" stroke-linecap="round" opacity=".58"/>
+    <line x1="412" y1="121" x2="423" y2="121" stroke="#0d9488" stroke-width="1.3" stroke-linecap="round" opacity=".40"/>
+  </g>
+
+  <path class="wire-base" d="M460 140 H490"/>
+  <path class="wire-glow packet-3" pathLength="100" d="M460 140 H490" stroke="#2dd4bf"/>
+  <path class="wire-packet packet-3" pathLength="100" d="M460 140 H490" stroke="#0d9488"/>
+
+  <g>
+    <rect class="card" x="490" y="100" width="120" height="80" rx="13"/>
+    <rect class="stage-glow stage-4" x="490" y="100" width="120" height="80" rx="13" stroke="#a78bfa"/>
+    <text class="label" x="504" y="120">stage 3</text>
+    <rect class="chip" x="504" y="128" width="92" height="22" rx="7"/>
+    <text class="main" x="550" y="143" text-anchor="middle">reranker</text>
+    <rect class="rank-bar-1" x="566" y="110" width="22" height="5" rx="1.5" fill="#7c3aed" opacity=".78"/>
+    <rect class="rank-bar-2" x="566" y="118" width="16" height="4" rx="1.5" fill="#7c3aed" opacity=".52"/>
+    <rect class="rank-bar-3" x="566" y="124" width="10" height="4" rx="1.5" fill="#7c3aed" opacity=".34"/>
+  </g>
+
+  <path class="wire-base" d="M610 140 H640"/>
+  <path class="wire-glow packet-4" pathLength="100" d="M610 140 H640" stroke="#c4b5fd"/>
+  <path class="wire-packet packet-4" pathLength="100" d="M610 140 H640" stroke="#7c3aed"/>
+
+  <g>
+    <rect class="card" x="640" y="88" width="170" height="104" rx="14"/>
+    <rect class="stage-glow stage-5" x="640" y="88" width="170" height="104" rx="14" stroke="#a78bfa"/>
+    <text class="label" x="656" y="108">stage 4</text>
+    <rect class="chip" x="656" y="116" width="138" height="22" rx="7"/>
+    <text class="main" x="725" y="131" text-anchor="middle">LLM judge</text>
+
+    <g class="bot" transform="translate(696 141)">
+      <g class="bot-arm-left">
+        <rect x="-10" y="14" width="12" height="8" rx="3" fill="#0d9488"/>
+      </g>
+      <g class="bot-arm-right">
+        <rect x="48" y="14" width="12" height="8" rx="3" fill="#0d9488"/>
+      </g>
+
+      <polygon points="12,-4 38,-4 33,4 17,4" fill="url(#gA)" stroke="#0f172a" stroke-width="1.6" stroke-linejoin="round"/>
+      <rect x="22" y="4" width="6" height="5" rx="1.2" fill="url(#gA)" stroke="#0f172a" stroke-width="1.4"/>
+
+      <rect x="2" y="8" width="46" height="38" rx="10" fill="url(#gT)" stroke="#0f172a" stroke-width="2.4"/>
+      <rect x="7" y="12" width="36" height="18" rx="6" fill="#0b1220" opacity=".94"/>
+      <rect class="bot-eye" x="13" y="16" width="5" height="8" rx="1.5" fill="#ffffff" opacity=".94"/>
+      <rect class="bot-eye" x="32" y="16" width="5" height="8" rx="1.5" fill="#ffffff" opacity=".94"/>
+      <rect x="20" y="25" width="10" height="3" rx="1.5" fill="#ffffff" opacity=".30"/>
+
+      <circle cx="15" cy="34" r="2.3" fill="#d97706" opacity=".95"/>
+      <circle cx="25" cy="34" r="2.3" fill="#5eead4" opacity=".95"/>
+      <circle cx="35" cy="34" r="2.3" fill="#7c3aed" opacity=".95"/>
+
+      <rect x="10" y="40" width="9" height="10" rx="3.6" fill="url(#gT)" stroke="#0f172a" stroke-width="2.1"/>
+      <rect x="31" y="40" width="9" height="10" rx="3.6" fill="url(#gT)" stroke="#0f172a" stroke-width="2.1"/>
+
+      <g class="score-pill">
+        <rect x="12" y="50" width="26" height="8" rx="4" fill="url(#gScore)" opacity=".95"/>
+        <text x="25" y="56" text-anchor="middle" font-size="6.8" font-weight="700" fill="#ffffff">score</text>
+      </g>
+    </g>
+  </g>
+
+  <path class="wire-base" d="M810 140 H840"/>
+  <path class="wire-glow packet-5" pathLength="100" d="M810 140 H840" stroke="#fcd34d"/>
+  <path class="wire-packet packet-5" pathLength="100" d="M810 140 H840" stroke="#d97706"/>
+
+  <g>
+    <rect class="card" x="840" y="112" width="100" height="56" rx="12"/>
+    <rect class="stage-glow stage-6" x="840" y="112" width="100" height="56" rx="12" stroke="#f59e0b"/>
+    <text class="label" x="852" y="132">output</text>
+    <text class="main" x="852" y="153">ranked</text>
+  </g>
+
+  <g transform="translate(748 70)">
+    <g class="spark">
+      <rect x="0" y="0" width="2" height="8" rx="1" fill="#7c3aed"/>
+      <rect x="-3" y="3" width="8" height="2" rx="1" fill="#7c3aed"/>
+    </g>
+  </g>
+
+  <text class="sub" x="240" y="200" text-anchor="middle">regex · hard rules</text>
+  <text class="sub" x="395" y="200" text-anchor="middle">keyword + semantic</text>
+  <text class="sub" x="550" y="200" text-anchor="middle">cross-encoder</text>
+  <text class="sub" x="725" y="210" text-anchor="middle">reason on top-K only</text>
+
+  <text class="sub" x="40" y="242">Tip: deterministic filters first — call the LLM last, only on the narrowed candidate pool</text>
+</svg>

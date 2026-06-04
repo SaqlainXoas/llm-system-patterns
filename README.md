@@ -7,7 +7,7 @@
 > Practical patterns for building reliable LLM systems with retrieval, ranking, scoring, guardrails, and production-minded engineering tradeoffs.
 
 <p align="center">
-  <img src="assets/svg/system-pipeline-hero.svg" alt="LLM system pipeline diagram showing deterministic filters, retrieval, reranking, and final LLM judgment" width="980">
+  <img src="assets/svg/llm_system_hero_v4_fixed.svg" alt="LLM system pipeline diagram showing deterministic filters, retrieval, reranking, and final LLM judgment" width="980">
 </p>
 
 ## Why This Repo Exists
