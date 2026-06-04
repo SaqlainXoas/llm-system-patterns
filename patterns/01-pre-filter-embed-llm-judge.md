@@ -32,12 +32,35 @@ Use `semantic retrieval` or `hybrid retrieval` after that to recover meaning acr
 
 Add `rerank` only when the right answer is already in the retrieved set but the ordering is still weak. Then let the `LLM judge` compare only the narrowed shortlist against explicit criteria. At that point the model is no longer searching the universe; it is reading a well-shaped problem.
 
+## Before embedding
+This repo keeps repeating one important design rule: do not jump into embeddings before you have used the cheap signals you already trust.
+
+For bulk resume scoring, `before embedding` usually means:
+- regex or keyword checks for hard skills
+- ID or document-type checks
+- country, region, or language filters
+- exact abbreviation checks like `RN`, `CPA`, `SOC 2`, or `C++`
+
+This first pass is where a lot of bulk noise gets removed. That makes the semantic layer cheaper and more accurate because it no longer has to compare obviously invalid items.
+
 ## Practical example
 Document scoring is a clean fit for this pattern. Imagine scoring proposals against a requirements sheet, profiles against a role definition, or policy documents against a compliance checklist.
 
 The weak version is: give everything to the LLM and ask it to choose. The stronger version is: filter hard mismatches, retrieve by meaning, rerank if top-k quality still feels soft, and ask the model to score only the final few candidates using evidence from the provided text.
 
 That structure lowers cost, lowers latency, enforces hard rules deterministically, and makes debugging easier because you can inspect which stage failed.
+
+For bulk resume processing, the same shape works well:
+
+```text
+extract and parse resume
+-> regex or hard-skill pre-check
+-> embedding similarity against JD
+-> optional rerank or score normalization
+-> final LLM validation on the best few resumes
+```
+
+That is very different from a naive LLM-first design, and it is also different from "store everything in a vector DB first and figure it out later." If the resumes are being scored in one pipeline run, you can often parse, embed, score, and clean up in-memory without a vector DB at all.
 
 ## Implementation blueprint
 For a resume-to-JD matcher or document scorer, a beginner-friendly first version is easier to understand when it runs top to bottom:
@@ -85,6 +108,8 @@ Functions such as `embed`, `call_reranker`, and `call_llm_judge` are placeholder
 `hybrid retrieval` usually means keyword top-k plus embedding top-k merged into one candidate set. This is especially useful when the system must respect abbreviations like `RN`, `SOC 2`, or `C++` but still recover paraphrases and related meaning.
 
 `top-k narrowing` means setting a hard cap before the next expensive stage. For example, retrieve top 50, rerank top 20, then let the LLM judge only top 5. Those numbers are not magic. They are there to keep cost and noise bounded.
+
+`LLM judge` usually means final validation against the user problem, not broad retrieval. The LLM should receive the narrowed candidates plus the scoring context, criteria, and supporting evidence. It should not be doing the bulk search job that earlier stages already solved more cheaply.
 
 ## Practical default
 If you want a healthy default shape, start here:

@@ -59,6 +59,15 @@ You do not need perfect telemetry on day one, but you do need hard caps somewher
 ## Practical defaults
 Good early defaults are: cap retrieval size, rerank only the shortlist, cache embeddings or repeated retrieval work, and keep a strict limit on how much text reaches the final LLM call.
 
+For bulk processing workloads such as resume scoring, budgeting is also about memory lifecycle:
+- batch the extraction step
+- batch embedding calls
+- cache reused query embeddings
+- score in chunks instead of loading everything into the final prompt
+- free or drop intermediate arrays once the next stage is done
+
+That design often matters more than whether you used a vector DB. For one-shot or batch pipelines, a smart in-memory flow can be cheaper and easier to control than a permanent indexing stack.
+
 If you do not know where to start, use this instinct:
 
 ```text

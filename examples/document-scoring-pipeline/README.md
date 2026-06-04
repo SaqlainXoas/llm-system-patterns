@@ -24,6 +24,18 @@ The implementation path is intentionally simple: load and normalize documents, r
 
 When the code lands, readers should be able to inspect what got filtered out, what got retrieved, whether reranking helped, what evidence the final score used, and where cost or latency concentrate.
 
+For a resume-scoring version of this example, the same pattern becomes:
+
+```text
+parse resume text
+-> hard-skill or regex pre-check
+-> embedding similarity against the JD
+-> shortlist the strongest profiles
+-> final LLM validation with criteria and evidence
+```
+
+That gives the user both the design concept and the practical scoring path.
+
 ## Planned repo shape
 
 ```text
