@@ -81,6 +81,7 @@ For orchestration-heavy agent workflows, see [langgraph-design-patterns](https:/
 - [RAG vs Fine-Tuning](decision-guides/rag-vs-fine-tuning.md)
 
 ### Example Tracks
+- [Cookbook](examples/README.md)
 - [Proposal to Brief Matching](examples/proposal-to-brief-matching-basic/README.md)
 - [Bulk Proposal Scoring](examples/bulk-proposal-scoring/README.md)
 - [Proposal to Brief with Vector Store](examples/proposal-to-brief-with-vector-store/README.md)

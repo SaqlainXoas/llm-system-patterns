@@ -1,6 +1,6 @@
 # Pattern 03: The Abbreviation and Short-Token Problem
 
-![Badge](https://img.shields.io/badge/Pattern-Lexical%20Edge%20Cases-2563eb) ![Badge](https://img.shields.io/badge/Risk-Short%20Tokens-0f172a)
+![Badge](https://img.shields.io/badge/Pattern-Lexical%20Edge%20Cases-2563eb) ![Badge](https://img.shields.io/badge/Risk-Short%20Tokens-0f172a) ![Badge](https://img.shields.io/badge/Fix-Keyword%20Anchor-16a34a)
 
 ## Quick take
 Short tokens, acronyms, IDs, and domain abbreviations are common failure cases for semantic matching. If missing a tiny token makes the result unacceptable, embeddings alone are usually the wrong trust layer.
@@ -17,7 +17,14 @@ Embedding systems are built to capture broader meaning, which is exactly why the
 
 That is why dictionaries, exact matching, metadata checks, or keyword support still matter. Hybrid retrieval is often the repair layer because it keeps semantic flexibility without dropping the exact lexical anchor.
 
-This shows up a lot in document retrieval and proposal-to-brief matching. Semantic similarity may correctly understand that two documents are about related work, but it may still underweight a critical abbreviation, certification code, tool name, or short capability token that should have been treated as decisive.
+This shows up a lot in document retrieval, candidate matching, and proposal scoring.
+
+| Short token | Why it can fail |
+|---|---|
+| `JS` | tiny token, weak semantic weight |
+| `RN` | role or certification code can get blurred |
+| `SOC 2` | compliance label should act like a hard requirement |
+| `C++` | lexical shape matters a lot |
 
 ## How to repair it
 The usual repair pattern is simple:
@@ -43,6 +50,14 @@ for term in required_terms:
 ```
 
 You can use `passed_all_terms` as a hard filter, a boosting signal, or a fallback path when semantic retrieval feels too loose.
+
+## Practical repair options
+
+| Pattern | Good when |
+|---|---|
+| `hard exact check` | missing the token is unacceptable |
+| `keyword boost` | the token matters a lot but is not fully binary |
+| `hybrid retrieval` | you need exact-token protection plus semantic recall |
 
 ## Where to use it
 This pattern matters in compliance, capability matching, technical search, regulated domains, and any workflow where codes, versions, acronyms, document abbreviations, or required capability names must not be missed.

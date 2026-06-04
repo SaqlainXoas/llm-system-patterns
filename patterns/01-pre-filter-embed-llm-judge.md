@@ -1,13 +1,13 @@
 # Pattern 01: Pre-filter -> Embed -> Rerank -> LLM Judge
 
-![Badge](https://img.shields.io/badge/Pattern-Flagship-2563eb) ![Badge](https://img.shields.io/badge/Goal-Narrow%20First-0f172a) ![Badge](https://img.shields.io/badge/LLM-Last-16a34a)
+![Badge](https://img.shields.io/badge/Pattern-Flagship-2563eb) ![Badge](https://img.shields.io/badge/Goal-Narrow%20First-0f172a) ![Badge](https://img.shields.io/badge/LLM-Last-16a34a) ![Badge](https://img.shields.io/badge/Default-Layered-0891b2)
 
 ## Quick take
 Do the cheap, reliable narrowing first. Ask the LLM to reason only after the proposal set is already small.
 
 ```mermaid
 flowchart LR
-  A[Candidate pool] --> B[Pre-filter]
+  A[Pool or batch] --> B[Pre-filter]
   B --> C[Semantic or hybrid retrieval]
   C --> D[Optional rerank]
   D --> E[LLM judge]
@@ -25,6 +25,14 @@ This pattern splits the work by job instead of by hype. Deterministic logic hand
 | `Rerank` | Clean up ordering inside the shortlist | Useful when retrieval is close but noisy |
 | `LLM judge` | Compare the narrowed set and explain | Strongest when the context is bounded |
 
+## Where this pattern fits
+
+| Use case | What gets filtered first | What gets judged last |
+|---|---|---|
+| bulk proposal scoring | region, required terms, compliance tags | final fit against the brief |
+| candidate or skill matching | required skills, certifications, location | shortlist quality and evidence |
+| policy or document scoring | document type, jurisdiction, mandatory clauses | grounded comparison against criteria |
+
 ## How the flow works
 Use `pre-filter` first for things that should never be fuzzy: required language, mandatory certifications, exact region, compliance tags, product family, or safe numeric thresholds. This stage is cheap, fast, and explainable, so it should absorb as much hard logic as possible.
 
@@ -33,7 +41,7 @@ Use `semantic retrieval` or `hybrid retrieval` after that to recover meaning acr
 Add `rerank` only when the right answer is already in the retrieved set but the ordering is still weak. Then let the `LLM judge` compare only the narrowed shortlist against explicit criteria. At that point the model is no longer searching the universe; it is reading a well-shaped problem.
 
 ## Pre-filter before embedding
-The helpful design idea here is simple: use `pre-filter` or `pre-check` logic first, then let embeddings work on the cleaner candidate set.
+The helpful design idea here is simple: use `pre-filter` or `pre-check` logic first, then let embeddings work on the cleaner set.
 
 For bulk proposal scoring, `pre-filter before embedding` usually means:
 - regex or keyword checks for required capabilities
@@ -41,7 +49,7 @@ For bulk proposal scoring, `pre-filter before embedding` usually means:
 - country, region, or language filters
 - exact abbreviation checks like `SOC 2`, `SSO`, `ISO 27001`, or `C++`
 
-This first pass is where a lot of bulk noise gets removed. That makes the semantic layer cheaper and more accurate because it no longer has to compare obviously invalid items.
+This first pass removes a lot of bulk noise. That makes the semantic layer cheaper and more accurate because it no longer has to compare obviously invalid items.
 
 ## Practical example
 Document scoring is a clean fit for this pattern. Imagine scoring proposals against a project brief, capability writeups against a requirements sheet, or policy documents against a compliance checklist.
@@ -69,10 +77,10 @@ For a proposal-to-brief matcher or document scorer, a beginner-friendly first ve
 # Step 1: keep only items that pass hard rules.
 filtered_items = []
 for item in items:
-    same_country = item["country"] == query["country"]
-    has_required_skill = query["must_have_skill"].lower() in item["text"].lower()
+    same_region = item["region"] == query["region"]
+    has_required_term = query["required_term"].lower() in item["text"].lower()
 
-    if same_country and has_required_skill:
+    if same_region and has_required_term:
         filtered_items.append(item)
 
 # Step 2: score the remaining items with embeddings.
@@ -110,6 +118,14 @@ Functions such as `embed`, `call_reranker`, and `call_llm_judge` are placeholder
 `top-k narrowing` means setting a hard cap before the next expensive stage. For example, retrieve top 50, rerank top 20, then let the LLM judge only top 5. Those numbers are not magic. They are there to keep cost and noise bounded.
 
 `LLM judge` usually means final validation against the user problem, not broad retrieval. The LLM should receive the narrowed candidates plus the scoring context, criteria, and supporting evidence. It should not be doing the bulk search job that earlier stages already solved more cheaply.
+
+## Quick rule for rerank
+
+| If this is true | Then |
+|---|---|
+| the answer is already in the retrieval pool | rerank can help |
+| retrieval is already clean enough | skip rerank |
+| recall is broken and the answer is missing | fix retrieval first |
 
 ## Practical default
 If you want a healthy default shape, start here:

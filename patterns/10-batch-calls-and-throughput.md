@@ -24,6 +24,13 @@ Single-item demos hide the real bottlenecks. Bulk scoring exposes them immediate
 
 That is why bulk flows usually need a worker shape. Let the request create a job, let a background worker process batches, and return the final results through polling, stored status, or a webhook callback.
 
+| If you keep it synchronous | What goes wrong |
+|---|---|
+| file batch is large | user waits too long |
+| embeddings are slow | request thread stays blocked |
+| final LLM stage is late | timeout pressure grows |
+| many users upload at once | throughput collapses faster |
+
 ## A healthy worker shape
 For proposal scoring, a practical first worker shape is:
 
@@ -46,6 +53,17 @@ This keeps the web layer responsive and stops one long scoring job from blocking
 `embed one batch` means process a bounded chunk, score it, keep what matters, and move on. Do not keep every intermediate vector if the job is one-shot.
 
 `keep a rolling top pool` means you do not need every document after scoring. If your final rerank window is 20, you may only need to retain the strongest 50 or 100 rows while later batches continue.
+
+## Engineering rhythm
+
+```text
+queue job
+-> open current batch only
+-> score and trim
+-> keep shortlist alive
+-> release finished batch
+-> continue
+```
 
 ## Code shape
 Keep the batch logic obvious:
@@ -74,6 +92,15 @@ That design is usually better than a giant synchronous request when:
 - file extraction is slow
 - the LLM stage is late in the pipeline
 - many users may submit jobs at once
+
+## Practical default
+
+| Stage | Healthy default |
+|---|---|
+| request layer | queue the job |
+| worker | process one batch at a time |
+| scoring | keep only the rolling top pool |
+| final step | let the LLM see the shortlist only |
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)

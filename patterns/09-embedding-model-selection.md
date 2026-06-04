@@ -1,6 +1,6 @@
 # Pattern 09: Embedding Model Selection
 
-![Badge](https://img.shields.io/badge/Pattern-Embeddings-2563eb) ![Badge](https://img.shields.io/badge/Goal-Fit%20the%20Task-0f172a)
+![Badge](https://img.shields.io/badge/Pattern-Embeddings-2563eb) ![Badge](https://img.shields.io/badge/Goal-Fit%20the%20Task-0f172a) ![Badge](https://img.shields.io/badge/Rule-Evaluate%20Real%20Failures-16a34a)
 
 ## Quick take
 Choosing an embedding model is a system tradeoff, not just a leaderboard decision. Domain fit, latency, cost, vector size, and how the model behaves on your real retrieval failures all matter more than a single benchmark score.
@@ -37,6 +37,13 @@ Compare models on:
 - whether storage cost stays reasonable
 
 If two models are close, pick the cheaper or simpler one and improve the pipeline logic around it.
+
+| If the issue is | Fix model? |
+|---|---|
+| wrong paraphrase behavior | maybe yes |
+| abbreviations like `RN` or `SOC 2` | usually not enough by itself |
+| weak chunking or missing filters | no, fix pipeline first |
+| storage or latency pressure | maybe pick a lighter model |
 
 ## Practical rule
 Change the embedding model when evaluation shows a real retrieval gain on your task. Do not change it just because a benchmark looks better if your actual bottleneck is abbreviations, chunking, missing filters, or weak hybrid design.

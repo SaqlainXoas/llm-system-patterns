@@ -1,6 +1,6 @@
 # Proposal to Brief Matching
 
-![Badge](https://img.shields.io/badge/Example-Flagship%20Build-2563eb) ![Badge](https://img.shields.io/badge/Style-Service%20Files-0f172a) ![Badge](https://img.shields.io/badge/Goal-Pre--filter%20Then%20Semantic-16a34a)
+![Badge](https://img.shields.io/badge/Example-Flagship%20Build-2563eb) ![Badge](https://img.shields.io/badge/Style-Service%20Files-0f172a) ![Badge](https://img.shields.io/badge/Goal-Pre--filter%20Then%20Semantic-16a34a) ![Badge](https://img.shields.io/badge/Progress-1%2F5-0f172a)
 
 ## Goal
 Learn the clean first-pass scoring flow used in this repo:
@@ -44,5 +44,6 @@ The same idea also applies to skills filtering, acronym-heavy matching, and othe
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)
+[![Cookbook](https://img.shields.io/badge/Cookbook-Examples-0f172a)](../README.md)
 [![Pattern](https://img.shields.io/badge/Pattern-01%20Layered%20Pipeline-2563eb)](../../patterns/01-pre-filter-embed-llm-judge.md)
 [![Next](https://img.shields.io/badge/Next-Bulk%20Proposal%20Scoring-2563eb)](../bulk-proposal-scoring/README.md)

@@ -1,6 +1,6 @@
 # Bulk Proposal Scoring
 
-![Badge](https://img.shields.io/badge/Example-Engineering%20Track-2563eb) ![Badge](https://img.shields.io/badge/Focus-Batches%20and%20Cleanup-0f172a) ![Badge](https://img.shields.io/badge/Goal-Throughput%20Without%20Vector%20DB-16a34a)
+![Badge](https://img.shields.io/badge/Example-Engineering%20Track-2563eb) ![Badge](https://img.shields.io/badge/Focus-Batches%20and%20Cleanup-0f172a) ![Badge](https://img.shields.io/badge/Goal-Throughput%20Without%20Vector%20DB-16a34a) ![Badge](https://img.shields.io/badge/Progress-2%2F5-0f172a)
 
 ## Goal
 Learn the scaled scoring shape:
@@ -41,5 +41,7 @@ That is why this example stays in-memory and focuses on engineering rhythm inste
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)
+[![Cookbook](https://img.shields.io/badge/Cookbook-Examples-0f172a)](../README.md)
+[![Prev](https://img.shields.io/badge/Prev-Basic%20Proposal%20Scoring-64748b)](../proposal-to-brief-matching-basic/README.md)
 [![Pattern](https://img.shields.io/badge/Pattern-10%20Batch%20Calls-2563eb)](../../patterns/10-batch-calls-and-throughput.md)
 [![Next](https://img.shields.io/badge/Next-Vector%20Store%20Track-2563eb)](../proposal-to-brief-with-vector-store/README.md)

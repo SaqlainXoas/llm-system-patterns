@@ -1,8 +1,0 @@
-Name: Bilal Ahmed
-Country: Pakistan
-Years Experience: 3
-Skills: SQL, Excel, Reporting, Dashboards
-Certifications:
-Summary:
-Analytics-focused profile with strong SQL reporting and dashboarding skills,
-but limited backend engineering and API ownership work.

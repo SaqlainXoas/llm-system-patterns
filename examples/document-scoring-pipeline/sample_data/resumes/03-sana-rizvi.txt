@@ -1,8 +1,0 @@
-Name: Sana Rizvi
-Country: Pakistan
-Years Experience: 8
-Skills: Python, SQL, Cloud Architecture, Service Design, REST API Design
-Certifications:
-Summary:
-Senior platform engineer who led cloud migrations, scaled service backends,
-and designed secure APIs for high-volume internal products.

@@ -1,6 +1,6 @@
 # Pattern 06: Prompt Injection Defense
 
-![Badge](https://img.shields.io/badge/Pattern-Safety-2563eb) ![Badge](https://img.shields.io/badge/Risk-Prompt%20Injection-0f172a)
+![Badge](https://img.shields.io/badge/Pattern-Safety-2563eb) ![Badge](https://img.shields.io/badge/Risk-Prompt%20Injection-0f172a) ![Badge](https://img.shields.io/badge/Rule-Evidence%20Not%20Authority-16a34a)
 
 ## Quick take
 Retrieved content is evidence, not authority. If external text can shape your downstream prompt, the pipeline needs explicit trust boundaries.
@@ -29,6 +29,13 @@ retrieve content
 ```
 
 That means the system prompt should define the rules, while retrieved text is passed as data the model may inspect but not obey.
+
+| Layer | What it should do |
+|---|---|
+| `system` | define rules |
+| `retrieval` | bring evidence only |
+| `policy filter` | block or flag risky text |
+| `model` | answer from allowed evidence |
 
 ## Rough implementation idea
 Even a very simple guard boundary is better than none:

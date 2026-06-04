@@ -1,6 +1,6 @@
 # Pattern 08: LLM-as-Judge Reliability
 
-![Badge](https://img.shields.io/badge/Pattern-Judge%20Reliability-2563eb) ![Badge](https://img.shields.io/badge/Risk-Drift-0f172a)
+![Badge](https://img.shields.io/badge/Pattern-Judge%20Reliability-2563eb) ![Badge](https://img.shields.io/badge/Risk-Drift-0f172a) ![Badge](https://img.shields.io/badge/Rule-Ground%20the%20Rubric-16a34a)
 
 ## Quick take
 LLM-based scoring can be valuable, but only when it is grounded, tightly scoped, and placed late in the pipeline. Reliability usually drops when the model has to search too much, infer too much, or invent missing evidence.
@@ -46,6 +46,13 @@ This is much safer than asking the model to "pick the best one" from a broad, me
 
 ## Practical rule
 If the judge prompt does not contain explicit criteria and visible evidence, the system is usually asking the model to improvise too much. Reliability improves when the shortlist is small, the rubric is clear, and the output shape is constrained.
+
+| More reliable | Less reliable |
+|---|---|
+| small shortlist | broad messy pool |
+| explicit rubric | vague “pick the best” prompt |
+| evidence-backed output | unsupported explanation |
+| constrained JSON or score shape | loose free-form judgment |
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)

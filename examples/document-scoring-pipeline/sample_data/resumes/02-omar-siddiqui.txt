@@ -1,8 +1,0 @@
-Name: Omar Siddiqui
-Country: Pakistan
-Years Experience: 5
-Skills: Python, PostgreSQL, Django, Kubernetes, API Architecture
-Certifications:
-Summary:
-Software engineer focused on backend platforms, service design, and database
-work. Strong experience building internal APIs and developer tooling.

@@ -1,8 +1,0 @@
-Name: Ayesha Khan
-Country: Pakistan
-Years Experience: 6
-Skills: Python, SQL, FastAPI, AWS, Docker, Microservices
-Certifications: AWS Certified Developer
-Summary:
-Backend engineer who built fintech APIs, shipped Python microservices, and
-owned SQL-heavy reporting pipelines for production systems.
