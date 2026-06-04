@@ -6,12 +6,9 @@
 Do not reach for a vector DB just because embeddings exist. First ask whether the work is a one-run batch job or a persistent retrieval system.
 
 ```mermaid
-flowchart TD
-  A[Need semantic scoring] --> B{Same batch, same brief, one run?}
-  B -->|Yes| C[In-memory batch scoring]
-  B -->|No| D{Need reuse, persistence, multi-user search?}
-  D -->|Yes| E[Vector DB]
-  D -->|No| C
+flowchart LR
+  A[One-run batch] --> B[In-memory]
+  C[Reusable corpus] --> D[Vector DB]
 ```
 
 ## Why this decision matters
@@ -40,16 +37,24 @@ If the same content must be searched again tomorrow, shared across users, filter
 This is the strong fit for bulk proposal scoring:
 
 ```text
-load current batch
--> pre-filter hard mismatches
+accept upload
+-> parse one batch only
+-> dedupe and pre-filter
 -> embed brief once
--> embed the current proposal batch
--> score and keep the best rows
--> rerank or judge the shortlist
--> clean up memory
+-> embed current batch
+-> keep rolling top pool
+-> rerank or judge shortlist
+-> drop finished batch from memory
 ```
 
 That flow matches one-run scoring very well because the embeddings are useful immediately and disposable afterward.
+
+## Why this pattern is strong
+The engineering win is not just "skip the vector DB." The real win is:
+- you do not build storage you do not need
+- you keep the active batch small
+- you can clean up after each batch
+- the final LLM only sees the strongest rows
 
 ## Vector DB flow
 This is better when the retrieval layer has to live beyond one run:
@@ -64,6 +69,16 @@ parse and chunk documents
 ```
 
 This is where services like Pinecone start making sense, and where a local store like Chroma is helpful for development or small local workflows.
+
+## Engineering comparison
+
+| Question | `In-memory batch` | `Vector DB` |
+|---|---|---|
+| Same batch, same run? | strong fit | usually overkill |
+| Reuse the corpus tomorrow? | weak fit | strong fit |
+| Multi-user search service? | weak fit | strong fit |
+| Easy cleanup after run? | very strong | more infra to manage |
+| Fast local experimentation? | strong | Chroma can also be good |
 
 ## Code shape
 The decision becomes easier when you write it this way:
@@ -82,15 +97,12 @@ def choose_storage_mode(job_shape):
 This is not about perfect theory. It is about protecting the system from unnecessary infrastructure.
 
 ## Practical recommendation
-Start with in-memory scoring when:
-- the brief changes per run
-- the batch is bounded
-- the results do not need long-term search
 
-Move to a vector DB when:
-- the corpus persists
-- retrieval becomes a shared service
-- metadata filtering and reuse matter more than one-run simplicity
+| Start with `in-memory` when | Move to `vector DB` when |
+|---|---|
+| the brief changes per run | the corpus persists |
+| the batch is bounded | retrieval becomes a shared service |
+| the results do not need long-term search | metadata filtering and reuse matter more than one-run simplicity |
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)

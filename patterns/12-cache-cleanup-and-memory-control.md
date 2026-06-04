@@ -32,6 +32,13 @@ Clean up the things that stop helping after a stage finishes:
 
 That is the difference between a flow that feels steady and one that slowly inflates during the run.
 
+| Keep it | Drop it |
+|---|---|
+| brief embedding reused across all batches | raw text from discarded rows |
+| shortlist rows still alive | embeddings for rows that lost early |
+| duplicate hashes for the active run | temporary extraction directories |
+| normalized metadata needed downstream | oversized prompt payloads after scoring |
+
 ## Code shape
 Keep the cleanup points explicit:
 
@@ -41,7 +48,7 @@ def process_batches(brief, proposal_batches, embed_text):
     shortlist = []
 
     for batch in proposal_batches:
-        batch_rows = score_batch(batch, brief_vector, embed_text)
+        batch_rows = score_one_batch(brief, batch, brief_vector)
         shortlist.extend(batch_rows)
         shortlist.sort(key=lambda row: row["score"], reverse=True)
         shortlist = shortlist[:40]
@@ -53,6 +60,18 @@ def process_batches(brief, proposal_batches, embed_text):
 ```
 
 This is intentionally plain. The point is to show that cleanup belongs in the flow, not in a forgotten TODO.
+
+## Engineering instinct
+Use cleanup as part of the design rhythm:
+
+```text
+extract current batch
+-> normalize only needed fields
+-> score and trim early
+-> keep shortlist only
+-> free finished batch
+-> move forward
+```
 
 ## Why this matters for extracted files
 If the batch starts from PDFs or uploads, cleanup also means:

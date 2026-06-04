@@ -26,7 +26,14 @@ The fix is rarely just "use a cheaper model." The better fix is usually to stop 
 | `Error` | how much quality drift the system can tolerate |
 
 ## Where systems usually burn money
-The common leaks are oversized candidate pools, repeated retrieval without caching, unbounded context, and LLMs doing rule-enforcement work that should have been deterministic. Those mistakes make the whole pipeline feel heavier than it needs to be.
+| Common leak | Better fix |
+|---|---|
+| oversized candidate pools | cap retrieval and shortlist size |
+| repeated retrieval work | cache reusable signals |
+| unbounded context | trim before the final LLM call |
+| LLM doing hard-rule checks | move those checks into deterministic filters |
+
+Those mistakes make the whole pipeline feel heavier than it needs to be.
 
 The healthier order is:
 
@@ -57,7 +64,11 @@ def trim_pipeline(candidates):
 You do not need perfect telemetry on day one, but you do need hard caps somewhere. Otherwise every later stage quietly becomes more expensive than intended.
 
 ## Practical defaults
-Good early defaults are: cap retrieval size, rerank only the shortlist, cache embeddings or repeated retrieval work, and keep a strict limit on how much text reaches the final LLM call.
+Good early defaults:
+- cap retrieval size
+- rerank only the shortlist
+- cache embeddings or repeated retrieval work
+- keep a strict limit on how much text reaches the final LLM call
 
 For bulk processing workloads such as proposal scoring, budgeting is also about memory lifecycle:
 - batch the extraction step
@@ -67,6 +78,15 @@ For bulk processing workloads such as proposal scoring, budgeting is also about 
 - free or drop intermediate arrays once the next stage is done
 
 That design often matters more than whether you used a vector DB. For one-shot or batch pipelines, a smart in-memory flow can be cheaper and easier to control than a permanent indexing stack.
+
+## Fast mental model
+
+| If this stage is expensive | Ask first |
+|---|---|
+| `Retrieval` | did I narrow too little before this? |
+| `Rerank` | am I reranking too many rows? |
+| `LLM judge` | did too much text survive into the final call? |
+| `Batch scoring` | am I holding more data in memory than I need? |
 
 If you do not know where to start, use this instinct:
 

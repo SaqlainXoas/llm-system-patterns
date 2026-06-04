@@ -17,7 +17,14 @@ flowchart LR
 ## Why hybrid matters
 Keyword search is still the best signal when exact product names, abbreviations, IDs, codes, version strings, regulated terms, or strict jurisdiction wording matter. It answers the question: did the text say the important thing?
 
-Semantic retrieval is better when language varies. It helps match documents with similar content even when the wording changes, and it helps match proposal capabilities against a project brief when the phrases are close in meaning but not literally the same. It recovers `customer churn` versus `retention risk`, `vendor onboarding` versus `supplier activation`, or other paraphrases that lexical search can miss. It answers the question: did the text mean the important thing?
+Semantic retrieval is better when language varies. It helps match similar meaning, context, and intent even when the words are not exact. It answers the question: did the text mean the important thing?
+
+| Semantic match examples | Why embeddings help |
+|---|---|
+| `customer churn` vs `retention risk` | same business idea, different wording |
+| `JavaScript` vs `JS` | close skill meaning, sometimes weak lexical overlap |
+| candidate profile vs job description | skillset and responsibilities can align without exact phrases |
+| similar policy or proposal documents | headings differ, core meaning stays close |
 
 Real systems often need both answers at the same time.
 
@@ -29,12 +36,13 @@ Real systems often need both answers at the same time.
 
 ## When embeddings actually help
 Embeddings help most when:
-- two proposals describe the same capability in different language
+- two documents describe the same capability in different language
 - two documents are semantically similar even if the headings differ
-- the project brief uses one phrase and the proposal uses another related phrase
+- a job description uses one phrase and a candidate profile uses another related phrase
+- a project brief uses one phrase and a proposal uses another related phrase
 - you need concept overlap, not literal word overlap
 
-This is why embeddings are useful for proposal-to-brief scoring, similar-document lookup, and semantic retrieval over messy natural language.
+That is why embeddings are useful for similar-document lookup, candidate or skill matching, proposal scoring, and messy natural-language retrieval in general.
 
 ## What hybrid actually looks like
 There is no single hybrid architecture. The simplest useful shape is often `hard filters -> keyword top-k -> embedding top-k -> merge`. That works well when you want recall from both worlds without pretending one signal should dominate every case.
@@ -44,13 +52,22 @@ Another healthy shape is `keyword pre-filter -> embedding retrieval`, especially
 The main caution is not to blend scores blindly. BM25 and cosine similarity are different signals, so the early goal is usually candidate generation first, score perfection later.
 
 ## Where systems usually go wrong
-Embedding-only pipelines often look impressive in demos and then fail on short tokens like `SOC 2`, `GDPR`, `C++`, `S3`, `RN`, or domain acronyms. This is one of the main semantic bottlenecks: embeddings can understand broader meaning, but they often do not treat short abbreviations or document-specific acronyms as strong enough truth signals. That is exactly where keyword support or a hybrid design should step in.
+| System shape | What goes wrong |
+|---|---|
+| `Embedding only` | misses short tokens like `SOC 2`, `GDPR`, `C++`, `S3`, `RN`, or domain acronyms |
+| `Keyword only` | breaks when users change phrasing or use synonyms |
+| `Hybrid` | stronger default when both exactness and meaning matter |
 
-Keyword-only pipelines fail in the other direction when users change phrasing and the system becomes brittle.
+The main semantic bottleneck is short tokens. Embeddings understand broader meaning well, but they often do not treat tiny abbreviations or document-specific acronyms as strong enough truth signals.
 
-Hybrid starts becoming the right default when exact requirements exist alongside natural-language variation, false positives from semantic-only retrieval are costly, and false negatives from keyword-only retrieval are also costly. That is why enterprise search, document matching, support knowledge retrieval, and policy search often end up here.
+The practical rule is simple:
 
-General rule: the smaller the token, code, or abbreviation, the less safe it is to trust semantic matching alone. The exact behavior depends on the embedding model, but as a system rule you should assume short abbreviations need keyword or hybrid support.
+```text
+small code or acronym -> protect it with keyword or hybrid support
+broader meaning or paraphrase -> let embeddings help
+```
+
+That is why enterprise search, skills matching, policy retrieval, and document scoring so often end up hybrid.
 
 ## Implementation blueprint
 A rough hybrid retrieval flow is easier to learn when it is written as one simple pipeline:
@@ -78,13 +95,12 @@ merged_hits = dedupe_by_id(keyword_hits + semantic_hits)
 That is intentionally simple. The first useful version is often just `keyword hits + semantic hits + merge`, not a complicated score-fusion system.
 
 ## Practical options
-`keyword pre-filter -> semantic retrieval` is a strong fit when abbreviations, required skills, or exact document tags must be preserved before semantic recall expands the pool.
-
-`keyword top-k + embedding top-k -> merge` is a strong fit when you want both exact lexical support and broader paraphrase recovery.
-
-`hybrid -> rerank` is a strong fit when you already have good recall but the final ordering still feels noisy.
-
-`bulk proposal scoring without vector DB` is a strong fit when you are processing one batch of proposals against one active brief or one requirements sheet. In that shape, you can parse the batch, compute embeddings in memory, score, keep the top few, and clean up memory after the run instead of building a permanent retrieval store.
+| Pattern | Good fit |
+|---|---|
+| `keyword pre-filter -> semantic retrieval` | abbreviations, required skills, or exact tags must survive before fuzzy matching expands recall |
+| `keyword top-k + embedding top-k -> merge` | you want exact lexical support plus paraphrase recovery |
+| `hybrid -> rerank` | the answer is already in the pool, but the ordering still feels messy |
+| `in-memory batch scoring` | one active brief or one scoring run, no need for permanent storage |
 
 ## Practical default
 For many production-minded systems, start here:
