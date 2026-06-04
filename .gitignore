@@ -1,11 +1,14 @@
 plan-llm-system-patterns.md
 
+# Internal references
+
 # macOS
 .DS_Store
 
 # Python
 __pycache__/
 *.py[cod]
+.pycache/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
@@ -25,3 +28,6 @@ venv/
 # Build artifacts
 dist/
 build/
+
+# Logs
+*.log

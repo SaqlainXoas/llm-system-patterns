@@ -3,9 +3,12 @@
 <p align="center">
   <img alt="Docs: Markdown-first" src="https://img.shields.io/badge/Docs-Markdown--first-0f172a?logo=markdown&logoColor=fff" />
   <img alt="Focus: Retrieval and ranking" src="https://img.shields.io/badge/Focus-Retrieval%20%2B%20Ranking-2563eb" />
-  <img alt="Approach: Layered systems" src="https://img.shields.io/badge/Approach-Layered%20Systems-0891b2" />
-  <img alt="Status: Phase 2 building" src="https://img.shields.io/badge/Status-Phase%202%20Building-16a34a" />
+  <img alt="Python: plain examples" src="https://img.shields.io/badge/Python-Plain%20Examples-3776AB?logo=python&logoColor=fff" />
+  <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-16a34a" />
+  <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-0ea5e9?logo=github&logoColor=fff" />
 </p>
+
+<p align="center"><br/></p>
 
 <p align="center">
   <img src="assets/llm_system_mascot.svg" alt="Pipeline bot mascot holding a filter funnel" width="170">
@@ -122,4 +125,10 @@ llm-system-patterns/
     └── svg/
 ```
 
-The next phase is to deepen the engineering docs, tighten the new example tracks, and connect the advanced batching and vector-store decisions more clearly.
+The core roadmap is now in place. What remains is optional polish, expansion, or future example depth.
+
+## Contributing
+- See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+MIT (see [LICENSE](LICENSE)).
