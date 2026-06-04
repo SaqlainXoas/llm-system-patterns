@@ -25,7 +25,7 @@ flowchart TD
 ## How to choose quickly
 Do not ask which method is more advanced. Ask what kind of evidence proves relevance in this problem.
 
-Choose `keyword` first when exact phrase presence, abbreviations, IDs, certifications, or legal wording matter. Choose `embeddings` first when the same idea appears in many phrasings and intent similarity matters more than exact wording, such as similar-document matching or resume-to-JD skill matching based on semantic overlap. Choose `hybrid` when both conditions are true at the same time, which is why so many serious retrieval systems eventually move there.
+Choose `keyword` first when exact phrase presence, abbreviations, IDs, certifications, or legal wording matter. Choose `embeddings` first when the same idea appears in many phrasings and intent similarity matters more than exact wording, such as similar-document matching or proposal-to-brief capability matching based on semantic overlap. Choose `hybrid` when both conditions are true at the same time, which is why so many serious retrieval systems eventually move there.
 
 Two quick tests help: if missing a short acronym, document abbreviation, or skill code makes the result unacceptable, do not rely on embeddings alone. That is one of the clearest semantic bottlenecks, and it usually means you need keyword support or a hybrid setup. If changing the exact wording should still preserve the match, do not rely on keyword search alone.
 

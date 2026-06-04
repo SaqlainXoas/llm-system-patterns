@@ -1,0 +1,8 @@
+{
+  "brief_id": "brief-security-onboarding",
+  "title": "Security onboarding and access review automation",
+  "region": "MEA",
+  "summary": "Need a proposal for access review automation with audit trails, SSO support, and SOC 2 readiness for a distributed operations team.",
+  "required_terms": ["SOC 2", "SSO"],
+  "preferred_terms": ["audit trail", "RBAC", "access review"]
+}

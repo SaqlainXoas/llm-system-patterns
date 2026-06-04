@@ -1,0 +1,37 @@
+[
+  {
+    "proposal_id": "prop-001",
+    "title": "Identity governance rollout",
+    "region": "MEA",
+    "summary": "Strong fit for access control automation in distributed teams.",
+    "text": "We deliver identity governance with SSO, SOC 2 mapping, access review workflows, and detailed audit trail reporting for enterprise onboarding."
+  },
+  {
+    "proposal_id": "prop-002",
+    "title": "Customer support analytics suite",
+    "region": "MEA",
+    "summary": "Good analytics story, weak security fit.",
+    "text": "This proposal focuses on support dashboards, KPI tracking, and ticket analytics. It mentions SSO but not access review or SOC 2 readiness."
+  },
+  {
+    "proposal_id": "prop-003",
+    "title": "Regional onboarding portal",
+    "region": "MEA",
+    "summary": "Focuses on approval flows and internal service onboarding.",
+    "text": "Portal modernization with SSO, approval flows, and compliance dashboards for onboarding teams."
+  },
+  {
+    "proposal_id": "prop-004",
+    "title": "Access certification accelerator",
+    "region": "MEA",
+    "summary": "Good fit with strong access governance language.",
+    "text": "Our accelerator covers access review, RBAC cleanup, SSO integration, and evidence collection for SOC 2 control reviews."
+  },
+  {
+    "proposal_id": "prop-005",
+    "title": "Access certification accelerator duplicate",
+    "region": "MEA",
+    "summary": "Intentional duplicate to teach dedupe flow.",
+    "text": "Our accelerator covers access review, RBAC cleanup, SSO integration, and evidence collection for SOC 2 control reviews."
+  }
+]

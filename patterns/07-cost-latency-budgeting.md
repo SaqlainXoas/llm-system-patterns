@@ -59,7 +59,7 @@ You do not need perfect telemetry on day one, but you do need hard caps somewher
 ## Practical defaults
 Good early defaults are: cap retrieval size, rerank only the shortlist, cache embeddings or repeated retrieval work, and keep a strict limit on how much text reaches the final LLM call.
 
-For bulk processing workloads such as resume scoring, budgeting is also about memory lifecycle:
+For bulk processing workloads such as proposal scoring, budgeting is also about memory lifecycle:
 - batch the extraction step
 - batch embedding calls
 - cache reused query embeddings

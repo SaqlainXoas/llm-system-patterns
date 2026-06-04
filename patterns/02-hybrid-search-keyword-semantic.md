@@ -17,7 +17,7 @@ flowchart LR
 ## Why hybrid matters
 Keyword search is still the best signal when exact product names, abbreviations, IDs, codes, version strings, regulated terms, or strict jurisdiction wording matter. It answers the question: did the text say the important thing?
 
-Semantic retrieval is better when language varies. It helps match documents with similar content even when the wording changes, and it helps match resume skills and profile experience against a job description when the phrases are close in meaning but not literally the same. It recovers `customer churn` versus `retention risk`, `resume parser` versus `candidate profile extractor`, or other paraphrases that lexical search can miss. It answers the question: did the text mean the important thing?
+Semantic retrieval is better when language varies. It helps match documents with similar content even when the wording changes, and it helps match proposal capabilities against a project brief when the phrases are close in meaning but not literally the same. It recovers `customer churn` versus `retention risk`, `vendor onboarding` versus `supplier activation`, or other paraphrases that lexical search can miss. It answers the question: did the text mean the important thing?
 
 Real systems often need both answers at the same time.
 
@@ -29,12 +29,12 @@ Real systems often need both answers at the same time.
 
 ## When embeddings actually help
 Embeddings help most when:
-- two resumes describe the same skill in different language
+- two proposals describe the same capability in different language
 - two documents are semantically similar even if the headings differ
-- the job description uses one phrase and the profile uses another related phrase
+- the project brief uses one phrase and the proposal uses another related phrase
 - you need concept overlap, not literal word overlap
 
-This is why embeddings are useful for resume-to-JD scoring, similar-document lookup, and semantic retrieval over messy natural language.
+This is why embeddings are useful for proposal-to-brief scoring, similar-document lookup, and semantic retrieval over messy natural language.
 
 ## What hybrid actually looks like
 There is no single hybrid architecture. The simplest useful shape is often `hard filters -> keyword top-k -> embedding top-k -> merge`. That works well when you want recall from both worlds without pretending one signal should dominate every case.
@@ -84,7 +84,7 @@ That is intentionally simple. The first useful version is often just `keyword hi
 
 `hybrid -> rerank` is a strong fit when you already have good recall but the final ordering still feels noisy.
 
-`bulk resume scoring without vector DB` is a strong fit when you are processing one batch of resumes against one job or one requirements sheet. In that shape, you can parse the batch, compute embeddings in memory, score, keep the top few, and clean up memory after the run instead of building a permanent retrieval store.
+`bulk proposal scoring without vector DB` is a strong fit when you are processing one batch of proposals against one active brief or one requirements sheet. In that shape, you can parse the batch, compute embeddings in memory, score, keep the top few, and clean up memory after the run instead of building a permanent retrieval store.
 
 ## Practical default
 For many production-minded systems, start here:

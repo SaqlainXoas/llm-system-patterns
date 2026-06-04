@@ -4,7 +4,7 @@
   <img alt="Docs: Markdown-first" src="https://img.shields.io/badge/Docs-Markdown--first-0f172a?logo=markdown&logoColor=fff" />
   <img alt="Focus: Retrieval and ranking" src="https://img.shields.io/badge/Focus-Retrieval%20%2B%20Ranking-2563eb" />
   <img alt="Approach: Layered systems" src="https://img.shields.io/badge/Approach-Layered%20Systems-0891b2" />
-  <img alt="Status: Phase 1 drafted" src="https://img.shields.io/badge/Status-Phase%201%20Drafted-16a34a" />
+  <img alt="Status: Phase 2 building" src="https://img.shields.io/badge/Status-Phase%202%20Building-16a34a" />
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@
 
 ```mermaid
 flowchart LR
-  A[Corpus or candidates] --> B[Hard filters]
+  A[Corpus or proposals] --> B[Hard filters]
   B --> C[Keyword and semantic retrieval]
   C --> D[Top-k narrowing]
   D --> E[Optional rerank]
@@ -44,7 +44,7 @@ Most LLM projects start with "send everything to the model." This repo is the op
 1. [Pattern 01](patterns/01-pre-filter-embed-llm-judge.md) for the flagship layered pipeline.
 2. [Embedding vs Keyword vs Hybrid](decision-guides/embedding-vs-keyword-vs-hybrid.md) for the retrieval decision.
 3. [Pattern 04](patterns/04-reranker-when-and-why.md) for precision tradeoffs.
-4. [Document Scoring Pipeline](examples/document-scoring-pipeline/README.md) for the first end-to-end build path.
+4. [Proposal to Brief Matching](examples/proposal-to-brief-matching-basic/README.md) for the first end-to-end build path.
 
 For orchestration-heavy agent workflows, see [langgraph-design-patterns](https://github.com/SaqlainXoas/langgraph-design-patterns).
 
@@ -56,7 +56,7 @@ For orchestration-heavy agent workflows, see [langgraph-design-patterns](https:/
 | Retrieval choice help | [Embedding vs Keyword vs Hybrid](decision-guides/embedding-vs-keyword-vs-hybrid.md) | [Pattern 02](patterns/02-hybrid-search-keyword-semantic.md) |
 | Better top-k quality | [When to Use a Reranker](decision-guides/when-to-use-reranker.md) | [Pattern 04](patterns/04-reranker-when-and-why.md) |
 | Final LLM scoring guidance | [When to Use LLM-as-Judge](decision-guides/when-to-use-llm-as-judge.md) | [Pattern 01](patterns/01-pre-filter-embed-llm-judge.md) |
-| A practical build path | [Document Scoring Pipeline](examples/document-scoring-pipeline/README.md) | [Scaled Document Scoring](examples/scaled-document-scoring/README.md) |
+| A practical build path | [Proposal to Brief Matching](examples/proposal-to-brief-matching-basic/README.md) | [Bulk Proposal Scoring](examples/bulk-proposal-scoring/README.md) |
 
 ## Pattern Map
 
@@ -70,6 +70,9 @@ For orchestration-heavy agent workflows, see [langgraph-design-patterns](https:/
 - [07. Cost and Latency Budgeting](patterns/07-cost-latency-budgeting.md)
 - [08. LLM-as-Judge Reliability](patterns/08-llm-as-judge-reliability.md)
 - [09. Embedding Model Selection](patterns/09-embedding-model-selection.md)
+- [10. Batch Calls and Throughput](patterns/10-batch-calls-and-throughput.md)
+- [11. In-Memory Batch Scoring vs Vector DB](patterns/11-in-memory-batch-scoring-vs-vector-db.md)
+- [12. Cache, Cleanup, and Memory Control](patterns/12-cache-cleanup-and-memory-control.md)
 
 ### Decision Guides
 - [Embedding vs Keyword vs Hybrid](decision-guides/embedding-vs-keyword-vs-hybrid.md)
@@ -78,8 +81,9 @@ For orchestration-heavy agent workflows, see [langgraph-design-patterns](https:/
 - [RAG vs Fine-Tuning](decision-guides/rag-vs-fine-tuning.md)
 
 ### Example Tracks
-- [Document Scoring Pipeline](examples/document-scoring-pipeline/README.md)
-- [Scaled Document Scoring](examples/scaled-document-scoring/README.md)
+- [Proposal to Brief Matching](examples/proposal-to-brief-matching-basic/README.md)
+- [Bulk Proposal Scoring](examples/bulk-proposal-scoring/README.md)
+- [Proposal to Brief with Vector Store](examples/proposal-to-brief-with-vector-store/README.md)
 - [Hybrid Search Pipeline](examples/hybrid-search-pipeline/README.md)
 - [RAG Without Frameworks](examples/rag-without-frameworks/README.md)
 
@@ -99,6 +103,7 @@ The repo now has:
 - the flagship retrieval and ranking docs in place
 - decision guides that point readers to the right pattern faster
 - example tracks shaped around real implementation paths
+- proposal-safe public framing for the flagship scoring examples
 
 ```text
 llm-system-patterns/
@@ -106,8 +111,9 @@ llm-system-patterns/
 ├── patterns/
 ├── decision-guides/
 ├── examples/
-│   ├── document-scoring-pipeline/
-│   ├── scaled-document-scoring/
+│   ├── proposal-to-brief-matching-basic/
+│   ├── bulk-proposal-scoring/
+│   ├── proposal-to-brief-with-vector-store/
 │   ├── hybrid-search-pipeline/
 │   └── rag-without-frameworks/
 └── assets/
@@ -115,4 +121,4 @@ llm-system-patterns/
     └── svg/
 ```
 
-The next phase is to expand the remaining pages and start the first plain-Python implementation track.
+The next phase is to deepen the engineering docs, tighten the new example tracks, and connect the advanced batching and vector-store decisions more clearly.
