@@ -1,10 +1,22 @@
 # Hybrid Search Pipeline
 
-This example track will focus on combining exact matching and semantic retrieval in a simple, framework-light implementation.
+![Badge](https://img.shields.io/badge/Example-Hybrid%20Retrieval-2563eb) ![Badge](https://img.shields.io/badge/Style-Framework--light-0f172a)
 
-## Planned Focus
+## Quick take
+This example combines exact matching and semantic retrieval in a clean implementation without hiding the retrieval logic inside heavy abstractions.
 
-- keyword signals
-- semantic retrieval
-- score blending
-- failure-case analysis
+```mermaid
+flowchart LR
+  A[Query] --> B[Keyword search]
+  A --> C[Semantic retrieval]
+  B --> D[Merge]
+  C --> D
+  D --> E[Optional rerank]
+```
+
+## What this example is for
+The focus here is keyword signals, semantic retrieval, score merging, and failure-case analysis. It will be the concrete companion to the hybrid retrieval docs so readers can see how lexical and semantic signals cooperate in code.
+
+---
+[![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)
+[![Pattern](https://img.shields.io/badge/Pattern-02%20Hybrid%20Search-2563eb)](../../patterns/02-hybrid-search-keyword-semantic.md)

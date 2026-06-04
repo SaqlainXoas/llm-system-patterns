@@ -1,192 +1,46 @@
 # Pattern 02: Hybrid Search, Keyword Plus Semantic
 
-Hybrid retrieval is often the most practical default for real systems.
+![Badge](https://img.shields.io/badge/Pattern-Retrieval-2563eb) ![Badge](https://img.shields.io/badge/Goal-Exactness%20%2B%20Meaning-0f172a) ![Badge](https://img.shields.io/badge/Default-Hybrid-16a34a)
 
-It exists because the two simple extremes both fail:
+## Quick take
+Hybrid retrieval exists because the two simple extremes both fail: keyword-only misses meaning, and embedding-only misses exactness.
 
-- keyword-only misses meaning
-- embedding-only misses exactness
+```mermaid
+flowchart LR
+  Q[Query] --> K[Keyword retrieval]
+  Q --> S[Semantic retrieval]
+  K --> M[Merge candidate sets]
+  S --> M
+  M --> R[Optional rerank]
+```
 
-If your task contains both hard terms and flexible phrasing, hybrid is usually where the system starts becoming reliable.
+## Why hybrid matters
+Keyword search is still the best signal when exact product names, abbreviations, IDs, codes, version strings, regulated terms, or strict jurisdiction wording matter. It answers the question: did the text say the important thing?
 
-## The Core Idea
+Semantic retrieval is better when language varies. It recovers `customer churn` versus `retention risk`, `resume parser` versus `candidate profile extractor`, or other paraphrases that lexical search can miss. It answers the question: did the text mean the important thing?
 
-Use keyword signals and semantic signals together instead of pretending one method fully replaces the other.
+Real systems often need both answers at the same time.
 
-In practice, that often means:
+| Problem shape | Best starting point | Why |
+|---|---|---|
+| Exact terminology is the truth signal | `Keyword` | Strong on hard lexical evidence |
+| Meaning matters more than phrasing | `Embeddings` | Better on paraphrase and concept overlap |
+| Exactness and semantic variation both matter | `Hybrid` | Most reliable default for real retrieval |
 
-- exact match, metadata filters, or BM25 for hard lexical evidence
-- embeddings for meaning, paraphrase, and related language
+## What hybrid actually looks like
+There is no single hybrid architecture. The simplest useful shape is often `hard filters -> keyword top-k -> embedding top-k -> merge`. That works well when you want recall from both worlds without pretending one signal should dominate every case.
 
-## Why Keyword Search Still Matters
+Another healthy shape is `keyword pre-filter -> embedding retrieval`, especially when mandatory terms must be enforced before any fuzzy reasoning. If the merged set is still noisy, add `rerank` after retrieval rather than making the retrieval stage itself overly clever.
 
-Keyword-style retrieval is still strong when:
+The main caution is not to blend scores blindly. BM25 and cosine similarity are different signals, so the early goal is usually candidate generation first, score perfection later.
 
-- exact product names matter
-- abbreviations are important
-- IDs, codes, or version strings matter
-- regulated terms must be present
-- you care about explicit phrases, not just related meaning
+## Where systems usually go wrong
+Embedding-only pipelines often look impressive in demos and then fail on short tokens like `SOC 2`, `GDPR`, `C++`, `S3`, `RN`, or domain acronyms. Keyword-only pipelines fail in the other direction when users change phrasing and the system becomes brittle.
 
-Examples:
+Hybrid starts becoming the right default when exact requirements exist alongside natural-language variation, false positives from semantic-only retrieval are costly, and false negatives from keyword-only retrieval are also costly. That is why enterprise search, document matching, support knowledge retrieval, and policy search often end up here.
 
-- `SOC 2`
-- `GDPR`
-- `C++`
-- `S3`
-- `RN`
-- exact jurisdiction names
-
-Embedding models may blur, weaken, or miss these signals, especially when the token is short or domain-specific.
-
-## Why Semantic Retrieval Still Matters
-
-Keyword systems struggle when language varies.
-
-Examples:
-
-- `customer churn` vs `retention risk`
-- `resume parser` vs `candidate profile extractor`
-- `fraud review` vs `transaction abuse detection`
-- `incident postmortem` vs `root-cause writeup`
-
-This is where embeddings shine:
-
-- paraphrases
-- related concepts
-- looser phrasing
-- broader contextual similarity
-
-## Why Embedding-Only Is Not Enough
-
-An embedding-only pipeline often looks smart in demos and weak in edge cases.
-
-Common failure modes:
-
-- missing a mandatory exact term
-- overvaluing conceptually related but invalid content
-- mixing up short abbreviations
-- failing to distinguish required versus merely similar
-
-Semantic similarity is not the same as task validity.
-
-## What Hybrid Actually Looks Like
-
-There is no single hybrid architecture.
-
-Common patterns include:
-
-### Keyword pre-filter plus embedding retrieval
-
-Use exact filters first, then semantic retrieval on the remaining pool.
-
-Good when:
-
-- mandatory terms must be enforced
-- semantic recall still matters after pruning
-
-### Parallel keyword and embedding retrieval
-
-Retrieve from both methods independently, then merge and score.
-
-Good when:
-
-- you want recall from both worlds
-- neither method alone is trustworthy enough
-
-### BM25 plus vector similarity plus rerank
-
-Generate a broader candidate set, then let a reranker clean up the ordering.
-
-Good when:
-
-- the corpus is large
-- candidate ordering matters
-- the system can afford one more precision stage
-
-## A Simple Mental Model
-
-Think of keyword search as answering:
-
-> Did the text say the important thing?
-
-Think of semantic retrieval as answering:
-
-> Did the text mean the important thing, even if phrased differently?
-
-Real systems often need both answers.
-
-## When Hybrid Is the Right Default
-
-Start with hybrid when:
-
-- exact requirements and broader meaning both matter
-- users phrase the same concept in many ways
-- abbreviations or hard terms appear alongside natural language variation
-- false positives from semantic-only retrieval are costly
-- false negatives from keyword-only retrieval are also costly
-
-This is very common in:
-
-- enterprise search
-- profile or document matching
-- support knowledge retrieval
-- policy and compliance lookup
-- long-tail terminology domains
-
-## When Hybrid May Be Overkill
-
-Use simpler retrieval if the problem is narrow enough.
-
-Keyword-first may be enough when:
-
-- all key terms are explicit
-- terminology is controlled
-- exact phrase presence is the main goal
-
-Embedding-first may be enough when:
-
-- language variation is high
-- hard constraints are minimal
-- exact wording matters less than intent similarity
-
-## Common Design Mistakes
-
-### 1. Treating embeddings as a full replacement for lexical search
-
-This usually fails when exactness matters.
-
-### 2. Merging scores without understanding what they mean
-
-BM25 and cosine similarity are different signals. Combining them blindly can create unstable ranking.
-
-### 3. Using hybrid when the corpus is tiny
-
-If you only have a small candidate set, simple filtering and direct comparison may be enough.
-
-### 4. Forgetting the abbreviation problem
-
-Short tokens and domain acronyms often need exact support.
-
-## Practical Implementation Options
-
-Start with the simplest viable version:
-
-### Option A: Filter first, then semantic search
-
-Best early default when hard constraints are clear.
-
-### Option B: Retrieve keyword top-k and embedding top-k, then union them
-
-Best when recall is the top concern.
-
-### Option C: Hybrid retrieval plus reranking
-
-Best when result ordering quality matters and you can afford one extra stage.
-
-## Recommended Default
-
-For many production-minded systems, this is a strong default:
+## Practical default
+For many production-minded systems, start here:
 
 ```text
 hard filters
@@ -197,18 +51,10 @@ hard filters
 -> final downstream task
 ```
 
-If that feels too heavy, simplify to:
+If that feels too heavy, simplify to `hard filters -> embedding retrieval` with exact-term boosting or a keyword fallback.
 
-```text
-hard filters
--> embedding retrieval
-with exact-term boosting or keyword fallback
-```
-
-## Takeaway
-
-Keyword search and semantic retrieval are not enemies.
-
-They solve different failure modes.
-
-When a system needs both exactness and meaning, hybrid retrieval is usually the design that behaves like an engineering solution instead of a demo.
+---
+[![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)
+[![Prev](https://img.shields.io/badge/Prev-01%20Flagship-64748b)](01-pre-filter-embed-llm-judge.md)
+[![Decision](https://img.shields.io/badge/Decision-Choose%20Retrieval-2563eb)](../decision-guides/embedding-vs-keyword-vs-hybrid.md)
+[![Next](https://img.shields.io/badge/Next-03%20Short%20Tokens-2563eb)](03-abbreviation-short-token-problem.md)

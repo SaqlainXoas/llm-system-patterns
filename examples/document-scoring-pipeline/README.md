@@ -1,114 +1,30 @@
 # Document Scoring Pipeline
 
-This example track is the first end-to-end implementation path for the repo.
+![Badge](https://img.shields.io/badge/Example-Flagship%20Build-2563eb) ![Badge](https://img.shields.io/badge/Style-Plain%20Python-0f172a) ![Badge](https://img.shields.io/badge/Goal-Layered%20Scoring-16a34a)
 
-It shows how to score documents with a layered system instead of an LLM-first shortcut.
+## Quick take
+This is the first end-to-end build path for the repo. It shows how to score documents with a layered system instead of an LLM-first shortcut.
 
-## What This Example Teaches
-
-- how to load and normalize documents
-- how to apply hard deterministic checks early
-- how to retrieve semantically relevant candidates
-- when to narrow or rerank before expensive reasoning
-- how to score or validate only the final shortlist
-
-## The Core Pipeline
-
-```text
-load documents
--> normalize / extract fields
--> deterministic pre-checks
--> retrieval
--> optional reranking
--> final grounded scoring
+```mermaid
+flowchart LR
+  A[Load documents] --> B[Normalize fields]
+  B --> C[Deterministic pre-checks]
+  C --> D[Retrieval]
+  D --> E[Optional rerank]
+  E --> F[Grounded scoring]
 ```
 
-This example is intentionally plain and practical.
+## Why this example comes first
+Document scoring naturally contains exact constraints, semantic similarity, ordering problems, cost tradeoffs, and grounded evaluation needs. That makes it the cleanest place to turn the repo's core philosophy into code.
 
-The point is not to showcase a framework.
-The point is to show system shape and engineering judgment.
+The point is not to showcase a framework. The point is to show system shape and engineering judgment in a form that readers can follow stage by stage.
 
-## Why This Example Comes First
+## What this build will teach
+The implementation path is intentionally simple: load and normalize documents, remove obvious hard mismatches, retrieve the most relevant candidates, optionally rerank if the ordering is still soft, and ask the model to score only the final shortlist against explicit criteria.
 
-This repo is centered on a repeatable idea:
+When the code lands, readers should be able to inspect what got filtered out, what got retrieved, whether reranking helped, what evidence the final score used, and where cost or latency concentrate.
 
-> LLM systems become more reliable when search, filtering, and ranking happen before final model judgment.
-
-Document scoring is a strong teaching example because it naturally contains:
-
-- exact constraints
-- semantic similarity
-- ordering problems
-- cost tradeoffs
-- grounded evaluation needs
-
-## Example Scenario
-
-A document scoring system usually has:
-
-- a target brief or criteria sheet
-- many candidate documents
-- some non-negotiable constraints
-- some softer relevance signals
-- a need for final ranking or validation
-
-Good public-friendly examples include:
-
-- proposals against requirements
-- internal reports against a research brief
-- knowledge base documents against a support task
-- policy documents against a checklist
-
-## Stage Breakdown
-
-### 1. Load and normalize
-
-Prepare a consistent internal representation:
-
-- file path
-- extracted text
-- metadata
-- structured fields if available
-
-### 2. Deterministic pre-checks
-
-Remove documents that clearly fail hard requirements.
-
-Examples:
-
-- missing mandatory region
-- missing required document type
-- missing explicit compliance marker
-- failing minimum metadata quality checks
-
-### 3. Retrieval
-
-Use keyword, embedding, or hybrid retrieval to identify the most relevant candidates.
-
-At this stage, the goal is recall with some discipline, not final scoring.
-
-### 4. Optional reranking
-
-If the retrieved set is still noisy, improve ordering before the final step.
-
-### 5. Grounded scoring
-
-Ask the model to score only the narrowed set against explicit criteria.
-
-This final prompt should require evidence from the provided document text, not open-ended guessing.
-
-## What This Example Should Avoid
-
-To keep the learning value high, this example should avoid:
-
-- framework-heavy abstractions too early
-- hidden magic that skips the reasoning steps
-- direct LLM scoring over the entire corpus
-- overly complex infrastructure before the core logic is clear
-
-## Recommended Repo Shape For This Example
-
-As this track grows, it can expand into files like:
+## Planned repo shape
 
 ```text
 examples/document-scoring-pipeline/
@@ -121,53 +37,9 @@ examples/document-scoring-pipeline/
 └── sample_data/
 ```
 
-That structure keeps the learning flow simple:
+The first version should stay plain: small sample data, explicit stage outputs, and no premature framework dependency.
 
-- one file for orchestration
-- one for filtering
-- one for retrieval
-- one for scoring prompt logic
-
-## Evaluation Questions This Example Should Answer
-
-When the implementation lands, readers should be able to inspect:
-
-- what got filtered out and why
-- what got retrieved and why
-- whether reranking helped
-- what evidence the final score used
-- where cost and latency are concentrated
-
-## Why This Example Is Better Than a One-Shot Prompt
-
-A one-shot prompt hides too much system logic inside the model call.
-
-This layered example makes the pipeline:
-
-- cheaper
-- easier to debug
-- easier to scale
-- easier to evaluate stage by stage
-
-## Implementation Direction
-
-The first coding version should stay simple:
-
-- plain Python
-- small sample dataset
-- explicit stage outputs
-- no premature framework dependency
-
-After that, later versions can add:
-
-- batching
-- caching
-- parallel processing
-- more realistic datasets
-- optional reranker integration
-
-## Takeaway
-
-This example is the practical bridge between the repo's pattern docs and a real implementation.
-
-It is where the layered system philosophy becomes concrete.
+---
+[![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)
+[![Pattern](https://img.shields.io/badge/Pattern-01%20Layered%20Pipeline-2563eb)](../../patterns/01-pre-filter-embed-llm-judge.md)
+[![Next](https://img.shields.io/badge/Next-Scaled%20Document%20Scoring-2563eb)](../scaled-document-scoring/README.md)
