@@ -17,8 +17,10 @@ Embedding systems are built to capture broader meaning, which is exactly why the
 
 That is why dictionaries, exact matching, metadata checks, or keyword support still matter. Hybrid retrieval is often the repair layer because it keeps semantic flexibility without dropping the exact lexical anchor.
 
+This shows up a lot in document retrieval and resume-to-JD matching. Semantic similarity may correctly understand that two documents are about related work, but it may still underweight a critical abbreviation, certification code, tool name, or short skill token that should have been treated as decisive.
+
 ## Where to use it
-This pattern matters in compliance, skills matching, technical search, regulated domains, and any workflow where codes, versions, acronyms, or required skill names must not be missed.
+This pattern matters in compliance, skills matching, technical search, regulated domains, and any workflow where codes, versions, acronyms, document abbreviations, or required skill names must not be missed.
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)

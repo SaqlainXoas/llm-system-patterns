@@ -17,7 +17,7 @@ flowchart LR
 ## Why hybrid matters
 Keyword search is still the best signal when exact product names, abbreviations, IDs, codes, version strings, regulated terms, or strict jurisdiction wording matter. It answers the question: did the text say the important thing?
 
-Semantic retrieval is better when language varies. It recovers `customer churn` versus `retention risk`, `resume parser` versus `candidate profile extractor`, or other paraphrases that lexical search can miss. It answers the question: did the text mean the important thing?
+Semantic retrieval is better when language varies. It helps match documents with similar content even when the wording changes, and it helps match resume skills and profile experience against a job description when the phrases are close in meaning but not literally the same. It recovers `customer churn` versus `retention risk`, `resume parser` versus `candidate profile extractor`, or other paraphrases that lexical search can miss. It answers the question: did the text mean the important thing?
 
 Real systems often need both answers at the same time.
 
@@ -35,7 +35,9 @@ Another healthy shape is `keyword pre-filter -> embedding retrieval`, especially
 The main caution is not to blend scores blindly. BM25 and cosine similarity are different signals, so the early goal is usually candidate generation first, score perfection later.
 
 ## Where systems usually go wrong
-Embedding-only pipelines often look impressive in demos and then fail on short tokens like `SOC 2`, `GDPR`, `C++`, `S3`, `RN`, or domain acronyms. Keyword-only pipelines fail in the other direction when users change phrasing and the system becomes brittle.
+Embedding-only pipelines often look impressive in demos and then fail on short tokens like `SOC 2`, `GDPR`, `C++`, `S3`, `RN`, or domain acronyms. This is one of the main semantic bottlenecks: embeddings can understand broader meaning, but they often do not treat short abbreviations or document-specific acronyms as strong enough truth signals. That is exactly where keyword support or a hybrid design should step in.
+
+Keyword-only pipelines fail in the other direction when users change phrasing and the system becomes brittle.
 
 Hybrid starts becoming the right default when exact requirements exist alongside natural-language variation, false positives from semantic-only retrieval are costly, and false negatives from keyword-only retrieval are also costly. That is why enterprise search, document matching, support knowledge retrieval, and policy search often end up here.
 
