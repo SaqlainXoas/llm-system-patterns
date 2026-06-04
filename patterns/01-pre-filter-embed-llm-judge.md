@@ -32,10 +32,10 @@ Use `semantic retrieval` or `hybrid retrieval` after that to recover meaning acr
 
 Add `rerank` only when the right answer is already in the retrieved set but the ordering is still weak. Then let the `LLM judge` compare only the narrowed shortlist against explicit criteria. At that point the model is no longer searching the universe; it is reading a well-shaped problem.
 
-## Before embedding
-This repo keeps repeating one important design rule: do not jump into embeddings before you have used the cheap signals you already trust.
+## Pre-filter before embedding
+The helpful design idea here is simple: use `pre-filter` or `pre-check` logic first, then let embeddings work on the cleaner candidate set.
 
-For bulk resume scoring, `before embedding` usually means:
+For bulk resume scoring, `pre-filter before embedding` usually means:
 - regex or keyword checks for hard skills
 - ID or document-type checks
 - country, region, or language filters
