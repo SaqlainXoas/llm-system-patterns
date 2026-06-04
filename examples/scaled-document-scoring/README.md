@@ -40,6 +40,22 @@ People often reach for a vector DB by default, but it is not always the right fi
 
 That is a real system-design pattern, not just a coding shortcut. It keeps the architecture lighter while still using batching, caching, and shortlist-based LLM validation.
 
+## Files
+
+| File | What it does |
+|---|---|
+| `app.py` | runs the scaled batch-processing version |
+| `batching.py` | splits the workload into small batches |
+| `cache.py` | caches embeddings so repeated work stays cheap |
+
+## Run it
+
+```bash
+python3 examples/scaled-document-scoring/app.py
+```
+
+This example reuses the sample documents from `document-scoring-pipeline/` and focuses only on the scaling concerns: batching, caching, shortlist control, and cleanup.
+
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)
 [![Prev](https://img.shields.io/badge/Prev-Document%20Scoring-64748b)](../document-scoring-pipeline/README.md)

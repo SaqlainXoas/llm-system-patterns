@@ -1,0 +1,8 @@
+Name: Maria Joseph
+Country: United Arab Emirates
+Years Experience: 7
+Skills: Python, SQL, FastAPI, AWS, Docker
+Certifications: AWS Certified Developer
+Summary:
+Backend engineer with strong API and cloud experience across logistics
+products, including event-driven services and production infrastructure.

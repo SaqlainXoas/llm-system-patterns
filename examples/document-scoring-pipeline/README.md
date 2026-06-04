@@ -36,7 +36,7 @@ parse resume text
 
 That gives the user both the design concept and the practical scoring path.
 
-## Planned repo shape
+## Repo shape
 
 ```text
 examples/document-scoring-pipeline/
@@ -49,7 +49,24 @@ examples/document-scoring-pipeline/
 └── sample_data/
 ```
 
-The first version should stay plain: small sample data, explicit stage outputs, and no premature framework dependency.
+## Files
+
+| File | What it does |
+|---|---|
+| `app.py` | runs the full example end to end |
+| `filters.py` | loads data and applies hard pre-checks |
+| `retrieval.py` | handles local semantic scoring, hybrid retrieval, and reranking |
+| `scorer.py` | turns the shortlist into final scored results |
+| `prompts.py` | shows what a grounded final LLM validation prompt can look like |
+| `sample_data/` | small local job and resume files for a reproducible run |
+
+## Run it
+
+```bash
+python3 examples/document-scoring-pipeline/app.py
+```
+
+The example uses only the Python standard library. The local embedding model is a tiny teaching stand-in so the pipeline stays runnable without API keys.
 
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../../README.md)

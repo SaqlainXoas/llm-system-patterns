@@ -1,0 +1,10 @@
+Title: Senior Backend Engineer
+Country: Pakistan
+Minimum Years Experience: 4
+Required Skills: Python, SQL
+Preferred Skills: FastAPI, AWS, Docker, Microservices, REST API Design
+Required Certifications: AWS Certified Developer
+Summary:
+We need a backend engineer who can build production APIs, work on data-backed
+services, and ship reliable cloud workloads. The role values strong Python and
+SQL fundamentals, practical API design, and clean communication.
