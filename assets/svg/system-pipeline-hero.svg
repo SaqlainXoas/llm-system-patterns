@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
+  <title id="title">Multi-stage LLM system pipeline</title>
+  <desc id="desc">A layered pipeline showing deterministic pre-filters, hybrid retrieval, semantic retrieval, reranking, and final LLM judgment with reliability, cost, and latency emphasis.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7f4ea"/>
+      <stop offset="100%" stop-color="#eef6ff"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fbff"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#17324d" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#2f4858"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="660" fill="url(#bg)"/>
+  <circle cx="1030" cy="88" r="120" fill="#dcecff" opacity="0.55"/>
+  <circle cx="167" cy="555" r="155" fill="#d6f5ec" opacity="0.5"/>
+
+  <rect x="56" y="48" width="1088" height="564" rx="28" fill="url(#panel)" stroke="#d7e3ef" filter="url(#shadow)"/>
+  <rect x="56" y="48" width="1088" height="10" rx="10" fill="url(#accent)"/>
+
+  <text x="92" y="110" fill="#10212b" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700">
+    Reliable LLM Systems Are Built In Layers
+  </text>
+  <text x="92" y="148" fill="#425466" font-family="Arial, Helvetica, sans-serif" font-size="20">
+    Narrow first. Reason later. Keep cost, latency, and reliability visible at every stage.
+  </text>
+
+  <g transform="translate(90 215)">
+    <rect width="170" height="180" rx="22" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+    <text x="20" y="48" fill="#9a3412" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">1. Pre-filter</text>
+    <text x="20" y="82" fill="#7c2d12" font-family="Arial, Helvetica, sans-serif" font-size="17">Exact IDs</text>
+    <text x="20" y="110" fill="#7c2d12" font-family="Arial, Helvetica, sans-serif" font-size="17">Regex rules</text>
+    <text x="20" y="138" fill="#7c2d12" font-family="Arial, Helvetica, sans-serif" font-size="17">Hard constraints</text>
+    <text x="20" y="166" fill="#7c2d12" font-family="Arial, Helvetica, sans-serif" font-size="14">Cheap, deterministic pruning</text>
+  </g>
+
+  <g transform="translate(300 215)">
+    <rect width="170" height="180" rx="22" fill="#eefcf7" stroke="#6ee7b7" stroke-width="2"/>
+    <text x="20" y="48" fill="#065f46" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">2. Hybrid Search</text>
+    <text x="20" y="82" fill="#065f46" font-family="Arial, Helvetica, sans-serif" font-size="17">Keyword signals</text>
+    <text x="20" y="110" fill="#065f46" font-family="Arial, Helvetica, sans-serif" font-size="17">Semantic hints</text>
+    <text x="20" y="138" fill="#065f46" font-family="Arial, Helvetica, sans-serif" font-size="17">Recall expansion</text>
+    <text x="20" y="166" fill="#065f46" font-family="Arial, Helvetica, sans-serif" font-size="14">Blend exactness and meaning</text>
+  </g>
+
+  <g transform="translate(510 215)">
+    <rect width="170" height="180" rx="22" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <text x="20" y="48" fill="#1d4ed8" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">3. Embed</text>
+    <text x="20" y="82" fill="#1e40af" font-family="Arial, Helvetica, sans-serif" font-size="17">Broader meaning</text>
+    <text x="20" y="110" fill="#1e40af" font-family="Arial, Helvetica, sans-serif" font-size="17">Related phrasing</text>
+    <text x="20" y="138" fill="#1e40af" font-family="Arial, Helvetica, sans-serif" font-size="17">Candidate retrieval</text>
+    <text x="20" y="166" fill="#1e40af" font-family="Arial, Helvetica, sans-serif" font-size="14">Use semantics after filtering</text>
+  </g>
+
+  <g transform="translate(720 215)">
+    <rect width="170" height="180" rx="22" fill="#faf5ff" stroke="#c4b5fd" stroke-width="2"/>
+    <text x="20" y="48" fill="#6d28d9" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">4. Rerank</text>
+    <text x="20" y="82" fill="#6b21a8" font-family="Arial, Helvetica, sans-serif" font-size="17">Precision boost</text>
+    <text x="20" y="110" fill="#6b21a8" font-family="Arial, Helvetica, sans-serif" font-size="17">Top-k control</text>
+    <text x="20" y="138" fill="#6b21a8" font-family="Arial, Helvetica, sans-serif" font-size="17">Better ordering</text>
+    <text x="20" y="166" fill="#6b21a8" font-family="Arial, Helvetica, sans-serif" font-size="14">Spend compute where it counts</text>
+  </g>
+
+  <g transform="translate(930 215)">
+    <rect width="170" height="180" rx="22" fill="#fff1f2" stroke="#fda4af" stroke-width="2"/>
+    <text x="20" y="48" fill="#be123c" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">5. LLM Judge</text>
+    <text x="20" y="82" fill="#9f1239" font-family="Arial, Helvetica, sans-serif" font-size="17">Grounded review</text>
+    <text x="20" y="110" fill="#9f1239" font-family="Arial, Helvetica, sans-serif" font-size="17">Scoring</text>
+    <text x="20" y="138" fill="#9f1239" font-family="Arial, Helvetica, sans-serif" font-size="17">Validation</text>
+    <text x="20" y="166" fill="#9f1239" font-family="Arial, Helvetica, sans-serif" font-size="14">Last, not first</text>
+  </g>
+
+  <line x1="260" y1="305" x2="300" y2="305" stroke="#2f4858" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="470" y1="305" x2="510" y2="305" stroke="#2f4858" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="680" y1="305" x2="720" y2="305" stroke="#2f4858" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="890" y1="305" x2="930" y2="305" stroke="#2f4858" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g transform="translate(92 454)">
+    <rect width="1016" height="108" rx="20" fill="#0f172a"/>
+    <text x="30" y="42" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">
+      System Principle
+    </text>
+    <text x="30" y="74" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="18">
+      Use cheap, deterministic checks early. Use semantic methods for recall. Add precision before expensive reasoning.
+    </text>
+    <text x="30" y="98" fill="#bfdbfe" font-family="Arial, Helvetica, sans-serif" font-size="18">
+      Reliability grows when the pipeline is staged instead of collapsing everything into one prompt.
+    </text>
+  </g>
+</svg>

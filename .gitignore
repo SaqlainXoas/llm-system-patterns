@@ -1,0 +1,27 @@
+plan-llm-system-patterns.md
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Environments and secrets
+.env
+.env.*
+
+# Editors
+.idea/
+.vscode/
+
+# Build artifacts
+dist/
+build/
