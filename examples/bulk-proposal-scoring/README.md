@@ -1,6 +1,6 @@
 # Bulk Proposal Scoring
 
-![Badge](https://img.shields.io/badge/Example-Engineering%20Track-2563eb) ![Badge](https://img.shields.io/badge/Focus-Batches%20and%20Cleanup-0f172a) ![Badge](https://img.shields.io/badge/Goal-Throughput%20Without%20Vector%20DB-16a34a) ![Badge](https://img.shields.io/badge/Progress-2%2F5-0f172a)
+![Badge](https://img.shields.io/badge/Example-Engineering%20Track-2563eb) ![Badge](https://img.shields.io/badge/Focus-Batches%20and%20Cleanup-0f172a) ![Badge](https://img.shields.io/badge/Goal-Throughput%20Without%20Vector%20DB-16a34a) ![Badge](https://img.shields.io/badge/Progress-2%2F6-0f172a)
 
 ## Goal
 Learn the scaled scoring shape:

@@ -1,6 +1,6 @@
 # RAG Without Frameworks
 
-![Badge](https://img.shields.io/badge/Example-RAG%20Without%20Frameworks-2563eb) ![Badge](https://img.shields.io/badge/Style-Plain%20Python-0f172a) ![Badge](https://img.shields.io/badge/Progress-5%2F5-0f172a)
+![Badge](https://img.shields.io/badge/Example-RAG%20Without%20Frameworks-2563eb) ![Badge](https://img.shields.io/badge/Style-Plain%20Python-0f172a) ![Badge](https://img.shields.io/badge/Progress-6%2F6-0f172a)
 
 ## Quick take
 This example is a minimal retrieval pipeline built with plain Python and direct API usage rather than heavy orchestration tooling.

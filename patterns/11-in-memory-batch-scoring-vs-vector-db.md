@@ -104,8 +104,11 @@ This is not about perfect theory. It is about protecting the system from unneces
 | the batch is bounded | retrieval becomes a shared service |
 | the results do not need long-term search | metadata filtering and reuse matter more than one-run simplicity |
 
+Once that persistent retrieval system exists, the next design question becomes: how should the retrieval itself behave? Pattern 13 picks up from there and shows why metadata filters should narrow the allowed set before vector ranking takes over.
+
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)
 [![Prev](https://img.shields.io/badge/Prev-10%20Batch%20Calls-64748b)](10-batch-calls-and-throughput.md)
 [![Example](https://img.shields.io/badge/Example-Vector%20Store%20Track-16a34a)](../examples/proposal-to-brief-with-vector-store/README.md)
+[![Deep%20Dive](https://img.shields.io/badge/Deep%20Dive-13%20Metadata%20Filters-2563eb)](13-metadata-filters-before-vector-search.md)
 [![Next](https://img.shields.io/badge/Next-12%20Cleanup%20and%20Memory-2563eb)](12-cache-cleanup-and-memory-control.md)

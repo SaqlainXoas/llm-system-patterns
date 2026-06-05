@@ -98,3 +98,4 @@ That is not just performance tuning. It is part of building a pipeline that stay
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)
 [![Prev](https://img.shields.io/badge/Prev-11%20In--Memory%20vs%20Vector%20DB-64748b)](11-in-memory-batch-scoring-vs-vector-db.md)
 [![Example](https://img.shields.io/badge/Example-Bulk%20Proposal%20Scoring-16a34a)](../examples/bulk-proposal-scoring/README.md)
+[![Next](https://img.shields.io/badge/Next-13%20Metadata%20Filters-2563eb)](13-metadata-filters-before-vector-search.md)

@@ -57,6 +57,7 @@ For orchestration-heavy agent workflows, see [langgraph-design-patterns](https:/
 |---|---|---|
 | A full layered mental model | [Pattern 01](patterns/01-pre-filter-embed-llm-judge.md) | [Pattern 04](patterns/04-reranker-when-and-why.md) |
 | Retrieval choice help | [Embedding vs Keyword vs Hybrid](decision-guides/embedding-vs-keyword-vs-hybrid.md) | [Pattern 02](patterns/02-hybrid-search-keyword-semantic.md) |
+| Production vector retrieval with filters | [Pattern 13](patterns/13-metadata-filters-before-vector-search.md) | [Metadata-Filtered Vector Search](examples/metadata-filtered-vector-search/README.md) |
 | Better top-k quality | [When to Use a Reranker](decision-guides/when-to-use-reranker.md) | [Pattern 04](patterns/04-reranker-when-and-why.md) |
 | Final LLM scoring guidance | [When to Use LLM-as-Judge](decision-guides/when-to-use-llm-as-judge.md) | [Pattern 01](patterns/01-pre-filter-embed-llm-judge.md) |
 | A practical build path | [Proposal to Brief Matching](examples/proposal-to-brief-matching-basic/README.md) | [Bulk Proposal Scoring](examples/bulk-proposal-scoring/README.md) |
@@ -76,6 +77,7 @@ For orchestration-heavy agent workflows, see [langgraph-design-patterns](https:/
 - [10. Batch Calls and Throughput](patterns/10-batch-calls-and-throughput.md)
 - [11. In-Memory Batch Scoring vs Vector DB](patterns/11-in-memory-batch-scoring-vs-vector-db.md)
 - [12. Cache, Cleanup, and Memory Control](patterns/12-cache-cleanup-and-memory-control.md)
+- [13. Metadata Filters Before Vector Search](patterns/13-metadata-filters-before-vector-search.md)
 
 ### Decision Guides
 - [Embedding vs Keyword vs Hybrid](decision-guides/embedding-vs-keyword-vs-hybrid.md)
@@ -88,6 +90,7 @@ For orchestration-heavy agent workflows, see [langgraph-design-patterns](https:/
 - [Proposal to Brief Matching](examples/proposal-to-brief-matching-basic/README.md)
 - [Bulk Proposal Scoring](examples/bulk-proposal-scoring/README.md)
 - [Proposal to Brief with Vector Store](examples/proposal-to-brief-with-vector-store/README.md)
+- [Metadata-Filtered Vector Search](examples/metadata-filtered-vector-search/README.md)
 - [Hybrid Search Pipeline](examples/hybrid-search-pipeline/README.md)
 - [RAG Without Frameworks](examples/rag-without-frameworks/README.md)
 
@@ -118,6 +121,7 @@ llm-system-patterns/
 │   ├── proposal-to-brief-matching-basic/
 │   ├── bulk-proposal-scoring/
 │   ├── proposal-to-brief-with-vector-store/
+│   ├── metadata-filtered-vector-search/
 │   ├── hybrid-search-pipeline/
 │   └── rag-without-frameworks/
 └── assets/
