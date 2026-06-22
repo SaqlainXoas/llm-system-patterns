@@ -357,6 +357,7 @@ That is the real pattern: not "make the model speak JSON," but "build a contract
 ---
 [![Home](https://img.shields.io/badge/Home-README-0f172a)](../README.md)
 [![Prev](https://img.shields.io/badge/Prev-13%20Metadata%20Filters-64748b)](13-metadata-filters-before-vector-search.md)
+[![Next](https://img.shields.io/badge/Next-15%20Prompt%20Injection%20Fast%20Filter%20%2B%20Blind%20Judge-2563eb)](15-prompt-injection-fast-filter-blind-judge.md)
 [![Related](https://img.shields.io/badge/Related-07%20Cost%20and%20Latency-2563eb)](07-cost-latency-budgeting.md)
 [![Related](https://img.shields.io/badge/Related-08%20LLM--as--Judge%20Reliability-2563eb)](08-llm-as-judge-reliability.md)
 [![Example](https://img.shields.io/badge/Example-Structured%20Output%20Contracts-16a34a)](../examples/structured-output-contracts/README.md)
